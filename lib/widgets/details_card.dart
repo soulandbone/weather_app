@@ -17,9 +17,12 @@ class DetailsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        FaIcon(icon),
-        Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-        Text(subtitle),
+        FaIcon(icon, color: Colors.white),
+        Text(
+          title,
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        Text(subtitle, style: TextStyle(color: Colors.white, fontSize: 10)),
       ],
     );
   }

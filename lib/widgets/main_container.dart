@@ -1,28 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:weather_app/models/weather_models.dart';
 import 'package:weather_app/widgets/details_info.dart';
 
 class MainContainer extends StatelessWidget {
-  const MainContainer({super.key});
+  const MainContainer({required this.mainWeatherInfo, super.key});
+
+  final MainWeatherInfo mainWeatherInfo;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).colorScheme.primary,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primary,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(30),
+          bottomRight: Radius.circular(30),
+        ),
+      ),
+
       child: Column(
         children: [
-          Center(child: Text('Minsk', style: TextStyle(fontSize: 25))),
+          Center(
+            child: Text(
+              mainWeatherInfo.locationCity,
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            ),
+          ),
           Gap(20),
           Image.asset('assets/sun.png'),
-          Gap(30),
+
+          Gap(20),
           Text(
-            '21',
-            style: TextStyle(fontSize: 120, fontWeight: FontWeight.bold),
+            '${mainWeatherInfo.temperatureCelsius}°',
+            style: TextStyle(
+              fontSize: 96,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
-          Text('Thunderstorm', style: TextStyle(fontSize: 24)),
+          Text(mainWeatherInfo.condition, style: TextStyle(fontSize: 24)),
           Text('Monday, 17 May'),
-          Center(child: DetailsInfo()),
-          Gap(80),
+          Gap(40),
+          Divider(color: Colors.white54, thickness: 1),
+          Center(
+            child: DetailsInfo(
+              humidity: mainWeatherInfo.humidity,
+              windSpeed: mainWeatherInfo.windSpeedKm,
+              rainChance: mainWeatherInfo.rainChance,
+            ),
+          ),
+          Gap(40),
         ],
       ),
     );
