@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_app/models/weather_models.dart';
+import 'package:weather_app/screens/settings_page.dart';
+import 'package:weather_app/screens/theme_page.dart';
 import 'package:weather_app/widgets/main_container.dart';
 import 'package:weather_app/widgets/scrollable_row.dart';
 import 'package:weather_app/widgets/switch_period.dart';
@@ -46,7 +48,50 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Weather App')),
+      appBar: AppBar(
+        title: Text('Weather App'),
+        actions: [
+          PopupMenuButton(
+            color: Colors.blue,
+            onSelected: (value) {
+              switch (value) {
+                case 'Theme':
+                  print('Theme has been chosen');
+                  break;
+                case 'Units':
+                  print('Measurement units has been chosen');
+              }
+            },
+            itemBuilder:
+                (BuildContext context) => [
+                  PopupMenuItem(
+                    value: 'Theme',
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => ThemePage()),
+                        );
+                      },
+                      child: Text('Theme & Images'),
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 'Units',
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => SettingsPage(),
+                          ),
+                        );
+                      },
+                      child: Text('Units'),
+                    ),
+                  ),
+                ],
+          ),
+        ],
+      ),
       body: FutureBuilder(
         future: _dataFetched,
         builder: (context, snapshot) {
