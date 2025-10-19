@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:weather_app/models/weather_models.dart';
-import 'package:weather_app/widgets/details_info.dart';
+import 'package:weather_app/presentation/widgets/details_info.dart';
 
 class MainContainer extends StatelessWidget {
   const MainContainer({required this.mainWeatherInfo, super.key});

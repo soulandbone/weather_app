@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/screens/modals/custom_modal.dart';
+import 'package:weather_app/presentation/screens/modals/custom_modal.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});

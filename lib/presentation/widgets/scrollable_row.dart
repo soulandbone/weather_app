@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/models/weather_models.dart';
-import 'package:weather_app/widgets/oval_time_snap.dart';
+import 'package:weather_app/presentation/widgets/oval_time_snap.dart';
 
 class ScrollableRow extends StatefulWidget {
   const ScrollableRow({
