@@ -2,16 +2,18 @@ import 'package:weather_app/models/weather_models.dart';
 import 'package:weather_app/services/api_service.dart';
 
 abstract class WeatherRepository {
-  Future<MainWeatherInfo> getWeatherData(String city); //
+  Future<MainWeatherInfo> getWeatherData(String city);
 }
 
 class WeatherRepositoryImpl implements WeatherRepository {
-  WeatherRepositoryImpl({required this.apiService});
-  final ApiServiceImpl apiService;
+  WeatherRepositoryImpl(this.apiService);
+
+  final ApiService apiService;
 
   @override
   Future<MainWeatherInfo> getWeatherData(String city) async {
-    var data = await apiService.getDataFromApi();
-    return MainWeatherInfo.fromJson(data);
+    var weatherInfo = await apiService.fetchData(city);
+
+    return MainWeatherInfo.fromJson(weatherInfo);
   }
 }
