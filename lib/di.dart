@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:weather_app/cubits/app_settings_cubit.dart';
 import 'package:weather_app/cubits/app_theme_cubit.dart';
 import 'package:weather_app/cubits/weather_cubit.dart';
 import 'package:weather_app/repositories/weather_repository.dart';
@@ -13,4 +14,5 @@ void setup() {
   );
   getIt.registerFactory<WeatherCubit>(() => WeatherCubit(getIt()));
   getIt.registerFactory<AppThemeCubit>(() => AppThemeCubit());
+  getIt.registerFactory<AppSettingsCubit>(() => AppSettingsCubit());
 }

@@ -5,11 +5,13 @@ class CustomModal extends StatefulWidget {
   const CustomModal({
     required this.title,
     required this.optionsTexts,
+    required this.onSelected,
     super.key,
   });
 
   final String title;
   final List<String> optionsTexts;
+  final Function onSelected;
 
   @override
   State<CustomModal> createState() => _CustomModalState();
@@ -42,20 +44,33 @@ class _CustomModalState extends State<CustomModal> {
             child: ListView.builder(
               itemCount: widget.optionsTexts.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(widget.optionsTexts[index]),
-                  trailing: Visibility(
-                    visible: isSelected[index],
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.check),
+                return InkWell(
+                  onTap: () {
+                    setState(() {
+                      for (var i = 0; i < isSelected.length; i++) {
+                        isSelected[i] = index == i;
+                      }
+                    });
+                  },
+                  child: ListTile(
+                    title: Text(widget.optionsTexts[index]),
+                    trailing: Visibility(
+                      visible: isSelected[index],
+                      child: Icon(Icons.check),
                     ),
                   ),
                 );
               },
             ),
           ),
-          Center(child: Text('Close')),
+          Center(
+            child: TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Close'),
+            ),
+          ),
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/cubits/app_settings_cubit.dart';
 import 'package:weather_app/cubits/app_theme_cubit.dart';
 import 'package:weather_app/cubits/app_theme_state.dart';
 import 'package:weather_app/cubits/weather_cubit.dart';
@@ -21,6 +22,7 @@ class BlocProviders extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => getIt<WeatherCubit>()),
         BlocProvider(create: (_) => getIt<AppThemeCubit>()),
+        BlocProvider(create: (_) => getIt<AppSettingsCubit>()),
       ],
       child: MyApp(),
     );
@@ -34,7 +36,7 @@ class MyApp extends StatelessWidget {
     var appState = context.watch<AppThemeCubit>().state;
 
     return MaterialApp(
-      theme: appState is AppThemeDark ? AppTheme.dark : AppTheme.light,
+      theme: appState.isDark ? AppTheme.dark : AppTheme.light,
       home: HomePage(),
     );
   }

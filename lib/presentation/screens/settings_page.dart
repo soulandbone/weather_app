@@ -19,6 +19,7 @@ class SettingsPage extends StatelessWidget {
                   context: context,
                   builder:
                       (context) => CustomModal(
+                        onSelected: () {},
                         title: 'Temperature',
                         optionsTexts: ['Celsius - C', 'Fahrenheit - F'],
                       ),

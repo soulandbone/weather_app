@@ -1,5 +1,5 @@
-abstract class AppThemeState {}
+class AppThemeState {
+  AppThemeState({required this.isDark});
 
-class AppThemeDark extends AppThemeState {}
-
-class AppThemeLight extends AppThemeState {}
+  bool isDark;
+}

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/cubits/app_theme_cubit.dart';
 import 'package:weather_app/cubits/app_theme_state.dart';
-import 'package:weather_app/theming/app_theme.dart';
 
 class ThemePage extends StatefulWidget {
   const ThemePage({super.key});
@@ -24,7 +23,7 @@ class _ThemePageState extends State<ThemePage> {
                   SwitchListTile(
                     title: Text('Dark Theme '),
 
-                    value: context.read<AppThemeCubit>().state is AppThemeDark,
+                    value: state.isDark,
                     onChanged: (value) {
                       context.read<AppThemeCubit>().toggleTheme();
                     },
