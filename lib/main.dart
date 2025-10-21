@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/cubits/app_theme_cubit.dart';
+import 'package:weather_app/cubits/app_theme_state.dart';
 import 'package:weather_app/cubits/weather_cubit.dart';
 import 'package:weather_app/di.dart';
 import 'package:weather_app/presentation/screens/home_page.dart';
@@ -16,7 +18,10 @@ class BlocProviders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (_) => getIt<WeatherCubit>())],
+      providers: [
+        BlocProvider(create: (_) => getIt<WeatherCubit>()),
+        BlocProvider(create: (_) => getIt<AppThemeCubit>()),
+      ],
       child: MyApp(),
     );
   }
@@ -26,6 +31,11 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: AppTheme.dark, home: HomePage());
+    var appState = context.watch<AppThemeCubit>().state;
+
+    return MaterialApp(
+      theme: appState is AppThemeDark ? AppTheme.dark : AppTheme.light,
+      home: HomePage(),
+    );
   }
 }

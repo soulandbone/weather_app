@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/cubits/app_theme_cubit.dart';
+import 'package:weather_app/cubits/app_theme_state.dart';
+import 'package:weather_app/theming/app_theme.dart';
 
 class ThemePage extends StatefulWidget {
   const ThemePage({super.key});
@@ -10,6 +14,25 @@ class ThemePage extends StatefulWidget {
 class _ThemePageState extends State<ThemePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(), body: Placeholder());
+    return BlocBuilder<AppThemeCubit, AppThemeState>(
+      builder:
+          (context, state) => Scaffold(
+            appBar: AppBar(),
+            body: Center(
+              child: Column(
+                children: [
+                  SwitchListTile(
+                    title: Text('Dark Theme '),
+
+                    value: context.read<AppThemeCubit>().state is AppThemeDark,
+                    onChanged: (value) {
+                      context.read<AppThemeCubit>().toggleTheme();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+    );
   }
 }

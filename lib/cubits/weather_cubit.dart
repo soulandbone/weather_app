@@ -11,7 +11,15 @@ class WeatherCubit extends Cubit<WeatherState> {
     emit(WeatherLoading());
     try {
       var mainWeatherInfo = await repository.getWeatherData(city);
-      emit(WeatherLoaded(mainWeatherInfo));
+      var hourlyWeatherInfo = await repository.getWeatherHourByHourDetails(
+        'Paris',
+      );
+      emit(
+        WeatherLoaded(
+          hourByHourDetails: hourlyWeatherInfo,
+          mainWeatherInfo: mainWeatherInfo,
+        ),
+      );
     } catch (e) {
       emit(WeatherError(e.toString()));
     }

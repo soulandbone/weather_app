@@ -1,10 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:gap/gap.dart';
-import 'package:http/http.dart' as http;
-import 'package:weather_app/models/weather_models.dart';
+import 'package:weather_app/cubits/weather_cubit.dart';
+
+import 'package:weather_app/cubits/weather_state.dart';
+
 import 'package:weather_app/presentation/screens/settings_page.dart';
 import 'package:weather_app/presentation/screens/theme_page.dart';
 import 'package:weather_app/presentation/widgets/main_container.dart';
@@ -19,30 +20,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late Future<Map<String, dynamic>> _dataFetched;
   bool isCelsius = true;
 
   @override
   void initState() {
     super.initState();
-
-    _dataFetched = getData();
-  }
-
-  Future<Map<String, dynamic>> getData() async {
-    var url = Uri.https('api.weatherapi.com', '/v1/forecast.json', {
-      'key': '4b73e077bfd9426f892231328250310',
-      'days': '1',
-      'aqi': 'yes',
-      'alerts': 'yes',
-      'q': 'Paris',
-    });
-
-    var response = await http.get(url);
-
-    var data = jsonDecode(response.body);
-
-    return data;
+    context.read<WeatherCubit>().fetchWeatherInfo('Paris');
   }
 
   @override
@@ -92,36 +75,30 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: FutureBuilder(
-        future: _dataFetched,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.hasData) {
-            MainWeatherInfo mainWeatherInfo = MainWeatherInfo.fromJson(
-              snapshot.data!,
-            );
-
-            HourbyHourDetails hourbyHourDetails = HourbyHourDetails.fromJson(
-              snapshot.data!,
-            );
-            //print(snapshot.data!['forecast']['forecastday'][0]['hour']);
+      body: BlocBuilder<WeatherCubit, WeatherState>(
+        builder: (context, state) {
+          if (state is WeatherLoading) {
+            return Center(child: CircularProgressIndicator());
+          } else if (state is WeatherLoaded) {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  MainContainer(mainWeatherInfo: mainWeatherInfo),
+                  MainContainer(mainWeatherInfo: state.mainWeatherInfo),
                   Gap(10),
                   SwitchPeriod(),
                   Gap(10),
 
                   ScrollableRow(
                     height: 105,
-                    hourbyHourDetails: hourbyHourDetails,
+                    hourbyHourDetails: state.hourByHourDetails,
                   ),
                 ],
               ),
             );
+          } else if (state is WeatherError) {
+            return Center(child: Text(state.message));
           }
-          return Center(child: Container());
+          return Container();
         },
       ),
     );
