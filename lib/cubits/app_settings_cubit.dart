@@ -5,36 +5,31 @@ class AppSettingsCubit extends Cubit<SettingsState> {
   AppSettingsCubit()
     : super(
         SettingsState(
-          isTempCelsius: true,
-          isPrecipitationMillimeters: true,
-          isVisibilityKilometers: true,
-          pressure: Pressure.hectopascals,
-          windOptions: WindOptions.feetPerSecond,
+          temperature: TemperatureUnits.celsius,
+          precipitation: PrecipitationUnits.millimeters,
+          visibility: VisibilityUnits.kilometers,
+          pressure: PressureUnits.hectopascals,
+          wind: WindUnits.kilometersPerHour,
         ),
       );
 
-  void setTempUnits(bool isTempCelsius) {
-    emit(state.copyWith(isTempCelsius: isTempCelsius));
+  void setTempUnits(TemperatureUnits temperature) {
+    emit(state.copyWith(temperature: temperature));
   }
 
-  void setPrecipitationUnits(bool isPrecipitationMillimeters) {
-    emit(
-      state.copyWith(isPrecipitationMillimeters: isPrecipitationMillimeters),
-    );
+  void setPrecipitationUnits(PrecipitationUnits precipitation) {
+    emit(state.copyWith(precipitation: precipitation));
   }
 
-  void setVisibilityUnits(bool isVisibilityKilometers) {
-    emit(state.copyWith(isVisibilityKilometers: isVisibilityKilometers));
+  void setVisibilityUnits(VisibilityUnits visibility) {
+    emit(state.copyWith(visibility: visibility));
   }
 
-  void setPressureUnits(Pressure pressure) {
-    //TODO: Test
-    Pressure.hectopascals;
-    emit(state.copyWith());
+  void setPressureUnits(PressureUnits pressure) {
+    emit(state.copyWith(pressure: pressure));
   }
 
-  void setWindUnits(WindOptions windOptions) {
-    //TODO:
-    emit(state.copyWith());
+  void setWindUnits(WindUnits wind) {
+    emit(state.copyWith(wind: wind));
   }
 }

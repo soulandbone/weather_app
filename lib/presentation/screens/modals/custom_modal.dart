@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/cubits/app_settings_cubit.dart';
+import 'package:weather_app/utils/utils.dart';
 
 class CustomModal extends StatefulWidget {
   const CustomModal({
@@ -11,29 +13,17 @@ class CustomModal extends StatefulWidget {
 
   final String title;
   final List<String> optionsTexts;
-  final Function onSelected;
+  final Function(String selection) onSelected;
 
   @override
   State<CustomModal> createState() => _CustomModalState();
 }
 
 class _CustomModalState extends State<CustomModal> {
-  late List<bool> isSelected;
-
-  @override
-  void initState() {
-    super.initState();
-    isSelected = List.generate(widget.optionsTexts.length, (n) {
-      if (n == 0) {
-        return true;
-      } else {
-        return false;
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    var currentSelection = context.watch<AppSettingsCubit>().state.temperature;
+    String temperature = Utils.getTemperatureString(currentSelection);
     return Container(
       padding: EdgeInsets.symmetric(vertical: 30),
       width: double.infinity,
@@ -46,16 +36,15 @@ class _CustomModalState extends State<CustomModal> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    setState(() {
-                      for (var i = 0; i < isSelected.length; i++) {
-                        isSelected[i] = index == i;
-                      }
-                    });
+                    context.read<AppSettingsCubit>().setTempUnits(
+                      Utils.getTemperatureEnum(widget.optionsTexts[index]),
+                    );
                   },
                   child: ListTile(
                     title: Text(widget.optionsTexts[index]),
                     trailing: Visibility(
-                      visible: isSelected[index],
+                      visible: temperature == widget.optionsTexts[index],
+
                       child: Icon(Icons.check),
                     ),
                   ),

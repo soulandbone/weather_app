@@ -1,4 +1,4 @@
-enum WindOptions {
+enum WindUnits {
   metersPerSecond,
   kilometersPerHour,
   feetPerSecond,
@@ -6,38 +6,42 @@ enum WindOptions {
   nauticalMilesPerHour,
 }
 
-enum Pressure { hectopascals, millimetersOfMercury, inchesOfMercury }
+enum PressureUnits { hectopascals, millimetersOfMercury, inchesOfMercury }
+
+enum TemperatureUnits { celsius, fahrenheit }
+
+enum PrecipitationUnits { millimeters, inches }
+
+enum VisibilityUnits { kilometers, miles }
 
 class SettingsState {
   SettingsState({
-    required this.isTempCelsius,
-    required this.isPrecipitationMillimeters,
-    required this.isVisibilityKilometers,
+    required this.temperature,
+    required this.precipitation,
+    required this.visibility,
     required this.pressure,
-    required this.windOptions,
+    required this.wind,
   });
 
-  bool isTempCelsius;
-  bool isPrecipitationMillimeters;
-  bool isVisibilityKilometers;
-  Pressure pressure;
-  WindOptions windOptions;
+  TemperatureUnits temperature;
+  PrecipitationUnits precipitation;
+  VisibilityUnits visibility;
+  PressureUnits pressure;
+  WindUnits wind;
 
   SettingsState copyWith({
-    bool? isTempCelsius,
-    bool? isPrecipitationMillimeters,
-    bool? isVisibilityKilometers,
-    Pressure? pressure,
-    WindOptions? windOptions,
+    TemperatureUnits? temperature,
+    PrecipitationUnits? precipitation,
+    VisibilityUnits? visibility,
+    PressureUnits? pressure,
+    WindUnits? wind,
   }) {
     return SettingsState(
-      isTempCelsius: isTempCelsius ?? this.isTempCelsius,
-      isPrecipitationMillimeters:
-          isPrecipitationMillimeters ?? this.isPrecipitationMillimeters,
-      isVisibilityKilometers:
-          isVisibilityKilometers ?? this.isVisibilityKilometers,
+      temperature: temperature ?? this.temperature,
+      precipitation: precipitation ?? this.precipitation,
+      visibility: visibility ?? this.visibility,
       pressure: pressure ?? this.pressure,
-      windOptions: windOptions ?? this.windOptions,
+      wind: wind ?? this.wind,
     );
   }
 }
