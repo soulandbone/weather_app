@@ -15,7 +15,7 @@ class SettingsMenuTile<T> extends StatelessWidget {
   final String title;
   final String subtitle;
   final List<String> optionsText;
-  final void Function(String selectedOption)
+  final Function(String selectedOption)
   onSelected; //function to detect the option selected and set the globalState for the given unit
   final T
   currentSelection; //gets the currentState from the global State. Is of type Enum, hence the T
