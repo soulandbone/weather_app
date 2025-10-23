@@ -14,7 +14,6 @@ class WeatherRepositoryImpl implements WeatherRepository {
   @override
   Future<MainWeatherInfo> getWeatherData(String city) async {
     var weatherInfo = await apiService.fetchData(city);
-    print(weatherInfo);
 
     return MainWeatherInfo.fromJson(weatherInfo);
   }

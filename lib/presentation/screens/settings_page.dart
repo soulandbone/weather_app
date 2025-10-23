@@ -4,6 +4,7 @@ import 'package:weather_app/constants/app_strings.dart';
 import 'package:weather_app/cubits/app_settings_cubit.dart';
 import 'package:weather_app/cubits/settings_state.dart';
 import 'package:weather_app/presentation/screens/modals/custom_modal.dart';
+import 'package:weather_app/presentation/widgets/settings_menu_tile.dart';
 import 'package:weather_app/utils/utils.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -17,27 +18,20 @@ class SettingsPage extends StatelessWidget {
         builder: (context, state) {
           return Column(
             children: [
-              InkWell(
-                child: ListTile(
-                  title: Text(AppStrings.kTemperatureLabel),
-                  subtitle: Text(Utils.getTemperatureString(state.temperature)),
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder:
-                          (context) => CustomModal(
-                            onSelected: (selectedOption) {},
-                            title: AppStrings.kTemperatureLabel,
-
-                            optionsTexts: [
-                              AppStrings.kCelsius,
-                              AppStrings.kFahrenheit,
-                            ],
-                          ),
-                    );
-                  },
-                ),
+              SettingsMenuTile(
+                title: AppStrings.kTemperatureLabel,
+                subtitle: Utils.getTemperatureString(state.temperature),
+                optionsText: AppLists.temperatureOptions,
+                onSelected: (selectedTemperature) {
+                  context.read<AppSettingsCubit>().setTempUnits(
+                    Utils.getTemperatureEnum(selectedTemperature),
+                  );
+                },
+                currentSelection:
+                    context.watch<AppSettingsCubit>().state.temperature,
+                getString: Utils.getTemperatureString,
               ),
+
               ListTile(
                 title: Text('Wind'),
                 subtitle: Text('Kilometers per hour -km/h'),

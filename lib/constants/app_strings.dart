@@ -7,3 +7,10 @@ class AppStrings {
   static const String kPressureLabel = 'Pressure';
   static const String kTemperatureLabel = 'Temperature';
 }
+
+class AppLists {
+  static const List<String> temperatureOptions = [
+    AppStrings.kCelsius,
+    AppStrings.kFahrenheit,
+  ];
+}
