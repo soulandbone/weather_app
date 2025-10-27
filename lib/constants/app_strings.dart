@@ -12,21 +12,19 @@ class AppStrings {
   static const String kMilesPerHour = "Miles per hour - mph";
   static const String kNauticalMilesPerHour = "Nautical miles per hour - kts";
 
-  /*------------------Wind---------------- */
+  /*------------------Precipitation---------------- */
+  static const String kPrecipitationlabel = 'Precipitation';
+  static const String kMillimeters = 'Millimeters - mm';
+  static const String kInches = 'Inches - in';
+
+  /*------------------Pressure---------------- */
   static const String kPressureLabel = 'Pressure';
-}
+  static const String kHectopascals = 'Hectopascals - hPa';
+  static const String kMillimetersOfMercury = 'Millimeters of mercury - mmHg';
+  static const String kInchesOfMercury = 'Inches of mercury - inHg';
 
-class AppLists {
-  static const List<String> temperatureOptions = [
-    AppStrings.kCelsius,
-    AppStrings.kFahrenheit,
-  ];
-
-  static const List<String> windOptions = [
-    AppStrings.kMetersPerSecond,
-    AppStrings.kKilometersPerHour,
-    AppStrings.kFeetPerSecond,
-    AppStrings.kMilesPerHour,
-    AppStrings.kNauticalMilesPerHour,
-  ];
+  /*------------------Visibility---------------- */
+  static const String kVisibilityLabel = 'Visibility';
+  static const String kKilometers = 'Kilometers - km';
+  static const String kMiles = 'Miles - mi';
 }

@@ -1,18 +1,8 @@
-enum WindUnits {
-  metersPerSecond,
-  kilometersPerHour,
-  feetPerSecond,
-  milesPerHour,
-  nauticalMilesPerHour,
-}
-
-enum PressureUnits { hectopascals, millimetersOfMercury, inchesOfMercury }
-
-enum TemperatureUnits { celsius, fahrenheit }
-
-enum PrecipitationUnits { millimeters, inches }
-
-enum VisibilityUnits { kilometers, miles }
+import 'package:weather_app/enums/precipitation_units.dart';
+import 'package:weather_app/enums/pressure_units.dart';
+import 'package:weather_app/enums/temperature_units.dart';
+import 'package:weather_app/enums/visibility_units.dart';
+import 'package:weather_app/enums/wind_units.dart';
 
 class SettingsState {
   SettingsState({

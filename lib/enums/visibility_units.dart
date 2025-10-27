@@ -1,0 +1,1 @@
+enum VisibilityUnits { kilometers, miles }
