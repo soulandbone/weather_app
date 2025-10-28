@@ -1,33 +1,36 @@
-import 'package:weather_app/constants/app_strings.dart';
+import 'package:weather_app/enums/precipitation_units.dart';
+import 'package:weather_app/enums/pressure_units.dart';
 import 'package:weather_app/enums/temperature_units.dart';
+import 'package:weather_app/enums/visibility_units.dart';
+import 'package:weather_app/enums/wind_units.dart';
 
 class AppLists {
-  static const List<TemperatureUnits> temperatureOptions = [
+  static const List<TemperatureUnits> kTemperatureOptions = [
     TemperatureUnits.celsius,
     TemperatureUnits.fahrenheit,
   ];
 
-  static const List<String> windOptions = [
-    AppStrings.kMetersPerSecond,
-    AppStrings.kKilometersPerHour,
-    AppStrings.kFeetPerSecond,
-    AppStrings.kMilesPerHour,
-    AppStrings.kNauticalMilesPerHour,
+  static const List<WindUnits> kWindOptions = [
+    WindUnits.kilometersPerHour,
+    WindUnits.metersPerSecond,
+    WindUnits.milesPerHour,
+    WindUnits.feetPerSecond,
+    WindUnits.nauticalMilesPerHour,
   ];
 
-  static const List<String> precipitationOptions = [
-    AppStrings.kMillimeters,
-    AppStrings.kInches,
+  static const List<PrecipitationUnits> kPrecipitationOptions = [
+    PrecipitationUnits.millimeters,
+    PrecipitationUnits.inches,
   ];
 
-  static const List<String> pressureOptions = [
-    AppStrings.kHectopascals,
-    AppStrings.kMillimetersOfMercury,
-    AppStrings.kInchesOfMercury,
+  static const List<PressureUnits> kPressureOptions = [
+    PressureUnits.hectopascals,
+    PressureUnits.millimetersOfMercury,
+    PressureUnits.inchesOfMercury,
   ];
 
-  static const List<String> visibilityOptions = [
-    AppStrings.kKilometers,
-    AppStrings.kMiles,
+  static const List<VisibilityUnits> kVisibilityOptions = [
+    VisibilityUnits.kilometers,
+    VisibilityUnits.miles,
   ];
 }

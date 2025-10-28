@@ -27,8 +27,60 @@ class SettingsPage extends StatelessWidget {
                   onSelected: (temperature) {
                     context.read<AppSettingsCubit>().setTempUnits(temperature);
                   },
-                  unitOptions: AppLists.temperatureOptions,
-                  unitsMap: AppMaps.temperatureMappings,
+                  unitOptions: AppLists.kTemperatureOptions,
+                  unitsMap: AppMaps.kTemperatureMappings,
+                ),
+              ),
+              SettingsMenuTile(
+                unitSetting: UnitsSettings(
+                  title: AppStrings.kPressureLabel,
+                  unitOptions: AppLists.kPressureOptions,
+                  onSelected: (pressure) {
+                    context.read<AppSettingsCubit>().setPressureUnits(pressure);
+                  },
+                  currentSelection:
+                      context.watch<AppSettingsCubit>().state.pressure,
+                  unitsMap: AppMaps.kPressureMappings,
+                ),
+              ),
+              SettingsMenuTile(
+                unitSetting: UnitsSettings(
+                  title: AppStrings.kWindLabel,
+                  unitOptions: AppLists.kWindOptions,
+                  onSelected: (wind) {
+                    context.read<AppSettingsCubit>().setWindUnits(wind);
+                  },
+                  currentSelection:
+                      context.watch<AppSettingsCubit>().state.wind,
+                  unitsMap: AppMaps.kWindMappings,
+                ),
+              ),
+              SettingsMenuTile(
+                unitSetting: UnitsSettings(
+                  title: AppStrings.kPrecipitationlabel,
+                  unitOptions: AppLists.kPrecipitationOptions,
+                  onSelected: (precipitation) {
+                    context.read<AppSettingsCubit>().setPrecipitationUnits(
+                      precipitation,
+                    );
+                  },
+                  currentSelection:
+                      context.watch<AppSettingsCubit>().state.precipitation,
+                  unitsMap: AppMaps.kPrecipitationMappings,
+                ),
+              ),
+              SettingsMenuTile(
+                unitSetting: UnitsSettings(
+                  title: AppStrings.kVisibilityLabel,
+                  unitOptions: AppLists.kVisibilityOptions,
+                  onSelected: (visibility) {
+                    context.read<AppSettingsCubit>().setVisibilityUnits(
+                      visibility,
+                    );
+                  },
+                  currentSelection:
+                      context.watch<AppSettingsCubit>().state.visibility,
+                  unitsMap: AppMaps.kVisibilityMappings,
                 ),
               ),
             ],
