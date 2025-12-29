@@ -27,4 +27,12 @@ class AppStrings {
   static const String kVisibilityLabel = 'Visibility';
   static const String kKilometers = 'Kilometers - km';
   static const String kMiles = 'Miles - mi';
+
+  /*-----------------------GeoLocation-------------------------------- */
+  static const String kLocationServicesDisabledMessage =
+      'Location services are disabled.';
+  static const String kPermissionDeniedMessage = 'Permission denied.';
+  static const String kPermissionDeniedForeverMessage =
+      'Permission denied forever.';
+  static const String kPermissionGrantedMessage = 'Permission granted.';
 }

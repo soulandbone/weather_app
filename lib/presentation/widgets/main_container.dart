@@ -4,9 +4,14 @@ import 'package:weather_app/models/weather_models.dart';
 import 'package:weather_app/presentation/widgets/details_info.dart';
 
 class MainContainer extends StatelessWidget {
-  const MainContainer({required this.mainWeatherInfo, super.key});
+  const MainContainer({
+    required this.mainWeatherInfo,
+    required this.onPressed,
+    super.key,
+  });
 
   final MainWeatherInfo mainWeatherInfo;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +34,11 @@ class MainContainer extends StatelessWidget {
           ),
           Gap(20),
           Image.asset('assets/sun.png'),
+          TextButton.icon(
+            icon: Icon(Icons.abc),
+            onPressed: onPressed,
+            label: Text('Get Location', style: TextStyle(color: Colors.white)),
+          ),
 
           Gap(20),
           Text(
