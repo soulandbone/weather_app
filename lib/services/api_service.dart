@@ -19,7 +19,7 @@ class ApiServiceImpl implements ApiService {
 
     final response = await http.get(url);
     final data = jsonDecode(response.body);
-
+    print('data is $data');
     return data;
   }
 }

@@ -28,7 +28,7 @@ class MainContainer extends StatelessWidget {
         children: [
           Center(
             child: Text(
-              mainWeatherInfo.locationCity,
+              'Paris', //mainWeatherInfo.locationCity,
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
           ),
