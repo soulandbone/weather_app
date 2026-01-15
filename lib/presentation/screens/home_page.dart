@@ -13,6 +13,7 @@ import 'package:weather_app/presentation/widgets/main_container.dart';
 import 'package:weather_app/presentation/widgets/scrollable_row.dart';
 import 'package:weather_app/presentation/widgets/switch_period.dart';
 import 'package:weather_app/services/geo_location_service.dart';
+import 'package:geocoding/geocoding.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,7 +25,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool isCelsius = true;
   GeolocationService locationService = GeolocationService();
-  Position? _currentPosition;
+  //Position? _currentPosition;
+
+  List<Placemark>? _currentPlacemarks;
 
   @override
   void initState() {
@@ -34,10 +37,20 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _setCurrentPosition() async {
+    List<Placemark> placeMarks;
     try {
       Position? position = await locationService.getCurrentPosition();
+      if (position != null) {
+        placeMarks = await placemarkFromCoordinates(
+          position.latitude,
+          position.longitude,
+        );
+      } else {
+        placeMarks = [];
+      }
+
       setState(() {
-        _currentPosition = position;
+        _currentPlacemarks = placeMarks;
       });
     } catch (e) {
       print(e);
@@ -58,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                   print('Theme has been chosen');
                   break;
                 case 'Units':
-                  print('Measurement units has been chosen');
+                  print('Measurement units have been chosen');
               }
             },
             itemBuilder:
@@ -101,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   MainContainer(mainWeatherInfo: state.mainWeatherInfo),
                   Gap(10),
-                  Text('Position is $_currentPosition'),
+                  Text(_currentPlacemarks?[0].locality ?? 'Getting info'),
                   Gap(10),
                   SwitchPeriod(),
                   Gap(10),
