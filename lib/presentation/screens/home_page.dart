@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:gap/gap.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/cubits/weather_cubit.dart';
 
 import 'package:weather_app/cubits/weather_state.dart';
@@ -11,6 +12,7 @@ import 'package:weather_app/presentation/screens/theme_page.dart';
 import 'package:weather_app/presentation/widgets/main_container.dart';
 import 'package:weather_app/presentation/widgets/scrollable_row.dart';
 import 'package:weather_app/presentation/widgets/switch_period.dart';
+import 'package:weather_app/services/geo_location_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,11 +23,25 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isCelsius = true;
+  GeolocationService locationService = GeolocationService();
+  Position? _currentPosition;
 
   @override
   void initState() {
     super.initState();
     context.read<WeatherCubit>().fetchWeatherInfo('Paris');
+    _setCurrentPosition();
+  }
+
+  Future<void> _setCurrentPosition() async {
+    try {
+      Position? position = await locationService.getCurrentPosition();
+      setState(() {
+        _currentPosition = position;
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -84,6 +100,8 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   MainContainer(mainWeatherInfo: state.mainWeatherInfo),
+                  Gap(10),
+                  Text('Position is $_currentPosition'),
                   Gap(10),
                   SwitchPeriod(),
                   Gap(10),

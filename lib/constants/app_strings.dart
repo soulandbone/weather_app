@@ -27,4 +27,15 @@ class AppStrings {
   static const String kVisibilityLabel = 'Visibility';
   static const String kKilometers = 'Kilometers - km';
   static const String kMiles = 'Miles - mi';
+
+  /*----------- Permissions------------------- */
+
+  static const String kLocationServicesDisabled =
+      'Location services are disabled';
+
+  static const String kLocationPermissionsDenied =
+      'Location permissions are denied';
+
+  static const String kLocationPermissionDeniedForever =
+      'Location permissions are permanently denied, we cannot request permissions ';
 }
