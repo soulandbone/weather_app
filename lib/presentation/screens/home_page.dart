@@ -24,45 +24,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isCelsius = true;
-  GeolocationService locationService = GeolocationService();
-  //Position? _currentPosition;
-
-  List<Placemark>? _currentPlacemarks;
 
   @override
   void initState() {
     super.initState();
-    _setCurrentPosition();
-    print('The position value is  ${_currentPlacemarks?[0].locality}');
-    if (_currentPlacemarks?[0].locality != null) {
-      context.read<WeatherCubit>().fetchWeatherInfo(
-        _currentPlacemarks![0].locality!,
-      );
-    } else {
-      context.read<WeatherCubit>().fetchWeatherInfo('Vilnius');
-    }
-  }
 
-  Future<void> _setCurrentPosition() async {
-    List<Placemark> placeMarks;
-
-    try {
-      Position? position = await locationService.getCurrentPosition();
-      if (position != null) {
-        placeMarks = await placemarkFromCoordinates(
-          position.latitude,
-          position.longitude,
-        );
-      } else {
-        placeMarks = [];
-      }
-
-      setState(() {
-        _currentPlacemarks = placeMarks;
-      });
-    } catch (e) {
-      print(e);
-    }
+    context.read<WeatherCubit>().fetchLocationAndWeather();
   }
 
   @override
@@ -122,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   MainContainer(mainWeatherInfo: state.mainWeatherInfo),
                   Gap(10),
-                  Text(_currentPlacemarks?[0].locality ?? 'Getting info'),
+                  Text(state.mainWeatherInfo.locationCity),
                   Gap(10),
                   SwitchPeriod(),
                   Gap(10),
