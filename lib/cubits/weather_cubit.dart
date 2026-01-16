@@ -12,7 +12,7 @@ class WeatherCubit extends Cubit<WeatherState> {
     try {
       var mainWeatherInfo = await repository.getWeatherData(city);
       var hourlyWeatherInfo = await repository.getWeatherHourByHourDetails(
-        'Paris',
+        city, // Was set to 'Paris' before (check in case it breaks)
       );
       emit(
         WeatherLoaded(
