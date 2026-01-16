@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/cubits/app_settings_cubit.dart';
 import 'package:weather_app/cubits/app_theme_cubit.dart';
+import 'package:weather_app/cubits/app_theme_state.dart';
 import 'package:weather_app/cubits/weather_cubit.dart';
 import 'package:weather_app/di.dart';
 import 'package:weather_app/presentation/screens/home_page.dart';
@@ -35,7 +36,8 @@ class MyApp extends StatelessWidget {
     var appState = context.watch<AppThemeCubit>().state;
 
     return MaterialApp(
-      theme: appState.isDark ? AppTheme.dark : AppTheme.light,
+      theme:
+          (appState as AppThemeLoaded).isDark ? AppTheme.dark : AppTheme.light,
       home: HomePage(),
     );
   }

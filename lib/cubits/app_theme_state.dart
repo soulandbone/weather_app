@@ -1,5 +1,11 @@
 class AppThemeState {
-  AppThemeState({required this.isDark});
+  const AppThemeState();
+}
 
-  bool isDark;
+class AppThemeLoading extends AppThemeState {}
+
+class AppThemeLoaded extends AppThemeState {
+  AppThemeLoaded({required this.isDark});
+
+  final bool isDark;
 }

@@ -23,7 +23,7 @@ class _ThemePageState extends State<ThemePage> {
                   SwitchListTile(
                     title: Text('Dark Theme '),
 
-                    value: state.isDark,
+                    value: (state as AppThemeLoaded).isDark,
                     onChanged: (value) {
                       context.read<AppThemeCubit>().toggleTheme();
                     },
