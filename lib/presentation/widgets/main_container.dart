@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:weather_app/cubits/app_settings_cubit.dart';
+import 'package:weather_app/enums/temperature_units.dart';
 import 'package:weather_app/models/weather_models.dart';
 import 'package:weather_app/presentation/widgets/details_info.dart';
 
@@ -10,6 +13,10 @@ class MainContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var isCelsius =
+        (context.watch<AppSettingsCubit>().state.temperature ==
+            TemperatureUnits.celsius);
+
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primary,
@@ -32,9 +39,11 @@ class MainContainer extends StatelessWidget {
 
           Gap(20),
           Text(
-            '${mainWeatherInfo.temperatureCelsius}°',
+            isCelsius
+                ? '${mainWeatherInfo.temperatureCelsius} °C'
+                : '${mainWeatherInfo.temperatureFahrenheit} °F',
             style: TextStyle(
-              fontSize: 96,
+              fontSize: 70,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
