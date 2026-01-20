@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 import 'package:weather_app/cubits/app_settings_cubit.dart';
 import 'package:weather_app/enums/temperature_units.dart';
+import 'package:weather_app/helpers/date_formatter.dart';
 import 'package:weather_app/models/weather_models.dart';
 import 'package:weather_app/presentation/widgets/details_info.dart';
 
@@ -16,6 +18,8 @@ class MainContainer extends StatelessWidget {
     var isCelsius =
         (context.watch<AppSettingsCubit>().state.temperature ==
             TemperatureUnits.celsius);
+
+    var dateFormatter = DateFormatter();
 
     return Container(
       decoration: BoxDecoration(
@@ -49,7 +53,7 @@ class MainContainer extends StatelessWidget {
             ),
           ),
           Text(mainWeatherInfo.condition, style: TextStyle(fontSize: 24)),
-          Text('Monday, 17 May'),
+          Text((dateFormatter.formatDate(DateTime.now()))),
           Gap(40),
           Divider(color: Colors.white54, thickness: 1),
           Center(

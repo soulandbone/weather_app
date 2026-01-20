@@ -8,10 +8,12 @@ class AppThemeCubit extends Cubit<AppThemeState> {
   }
 
   void toggleTheme() {
-    final currentState = state as AppThemeLoaded;
-    var isDark = !currentState.isDark;
-    _saveTheme(isDark);
-    emit(AppThemeLoaded(isDark: isDark));
+    if (state is AppThemeLoaded) {
+      final currentState = state as AppThemeLoaded;
+      var isDark = !currentState.isDark;
+      _saveTheme(isDark);
+      emit(AppThemeLoaded(isDark: isDark));
+    }
   }
 
   // to save the newTheme into the shared preferences

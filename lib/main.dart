@@ -35,10 +35,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<AppThemeCubit>().state;
 
-    return MaterialApp(
-      theme:
-          (appState as AppThemeLoaded).isDark ? AppTheme.dark : AppTheme.light,
-      home: HomePage(),
-    );
+    ThemeData theme;
+
+    if (appState is AppThemeLoaded) {
+      theme = appState.isDark ? AppTheme.dark : AppTheme.light;
+    } else {
+      theme = AppTheme.light;
+    }
+
+    return MaterialApp(theme: theme, home: HomePage());
   }
 }
