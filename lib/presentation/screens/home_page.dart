@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:gap/gap.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/cubits/weather_cubit.dart';
 
 import 'package:weather_app/cubits/weather_state.dart';
@@ -12,8 +11,6 @@ import 'package:weather_app/presentation/screens/theme_page.dart';
 import 'package:weather_app/presentation/widgets/main_container.dart';
 import 'package:weather_app/presentation/widgets/scrollable_row.dart';
 import 'package:weather_app/presentation/widgets/switch_period.dart';
-import 'package:weather_app/services/geo_location_service.dart';
-import 'package:geocoding/geocoding.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -39,6 +36,7 @@ class _HomePageState extends State<HomePage> {
         title: Text('Weather App'),
         actions: [
           PopupMenuButton(
+            onOpened: () {},
             color: Colors.blue,
             onSelected: (value) {
               switch (value) {

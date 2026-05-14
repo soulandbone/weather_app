@@ -5,7 +5,13 @@ import 'package:weather_app/enums/visibility_units.dart';
 import 'package:weather_app/enums/wind_units.dart';
 
 class SettingsState {
-  SettingsState({
+  SettingsState();
+}
+
+class SettingsLoading extends SettingsState {}
+
+class SettingsLoaded extends SettingsState {
+  SettingsLoaded({
     required this.temperature,
     required this.precipitation,
     required this.visibility,
@@ -19,14 +25,14 @@ class SettingsState {
   PressureUnits pressure;
   WindUnits wind;
 
-  SettingsState copyWith({
+  SettingsLoaded copyWith({
     TemperatureUnits? temperature,
     PrecipitationUnits? precipitation,
     VisibilityUnits? visibility,
     PressureUnits? pressure,
     WindUnits? wind,
   }) {
-    return SettingsState(
+    return SettingsLoaded(
       temperature: temperature ?? this.temperature,
       precipitation: precipitation ?? this.precipitation,
       visibility: visibility ?? this.visibility,

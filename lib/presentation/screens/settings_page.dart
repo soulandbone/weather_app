@@ -4,7 +4,7 @@ import 'package:weather_app/constants/app_lists.dart';
 import 'package:weather_app/constants/app_maps.dart';
 import 'package:weather_app/constants/app_strings.dart';
 import 'package:weather_app/cubits/app_settings_cubit.dart';
-import 'package:weather_app/cubits/settings_state.dart';
+import 'package:weather_app/cubits/app_settings_state.dart';
 import 'package:weather_app/models/units_settings.dart';
 import 'package:weather_app/presentation/widgets/settings_menu_tile.dart';
 
@@ -23,7 +23,9 @@ class SettingsPage extends StatelessWidget {
                 unitSetting: UnitsSettings(
                   title: AppStrings.kTemperatureLabel,
                   currentSelection:
-                      context.watch<AppSettingsCubit>().state.temperature,
+                      (context.watch<AppSettingsCubit>().state
+                              as SettingsLoaded)
+                          .temperature,
                   onSelected: (temperature) {
                     context.read<AppSettingsCubit>().setTempUnits(temperature);
                   },
@@ -39,7 +41,9 @@ class SettingsPage extends StatelessWidget {
                     context.read<AppSettingsCubit>().setPressureUnits(pressure);
                   },
                   currentSelection:
-                      context.watch<AppSettingsCubit>().state.pressure,
+                      (context.watch<AppSettingsCubit>().state
+                              as SettingsLoaded)
+                          .pressure,
                   unitsMap: AppMaps.kPressureMappings,
                 ),
               ),
@@ -51,7 +55,9 @@ class SettingsPage extends StatelessWidget {
                     context.read<AppSettingsCubit>().setWindUnits(wind);
                   },
                   currentSelection:
-                      context.watch<AppSettingsCubit>().state.wind,
+                      (context.watch<AppSettingsCubit>().state
+                              as SettingsLoaded)
+                          .wind,
                   unitsMap: AppMaps.kWindMappings,
                 ),
               ),
@@ -65,7 +71,9 @@ class SettingsPage extends StatelessWidget {
                     );
                   },
                   currentSelection:
-                      context.watch<AppSettingsCubit>().state.precipitation,
+                      (context.watch<AppSettingsCubit>().state
+                              as SettingsLoaded)
+                          .precipitation,
                   unitsMap: AppMaps.kPrecipitationMappings,
                 ),
               ),
@@ -79,7 +87,9 @@ class SettingsPage extends StatelessWidget {
                     );
                   },
                   currentSelection:
-                      context.watch<AppSettingsCubit>().state.visibility,
+                      (context.watch<AppSettingsCubit>().state
+                              as SettingsLoaded)
+                          .visibility,
                   unitsMap: AppMaps.kVisibilityMappings,
                 ),
               ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:intl/intl.dart';
 import 'package:weather_app/cubits/app_settings_cubit.dart';
+import 'package:weather_app/cubits/app_settings_state.dart';
 import 'package:weather_app/enums/temperature_units.dart';
 import 'package:weather_app/helpers/date_formatter.dart';
 import 'package:weather_app/models/weather_models.dart';
@@ -15,9 +15,15 @@ class MainContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var isCelsius =
-        (context.watch<AppSettingsCubit>().state.temperature ==
-            TemperatureUnits.celsius);
+    bool isCelsius;
+
+    var appState = context.watch<AppSettingsCubit>().state;
+
+    if (appState is SettingsLoaded) {
+      isCelsius = appState.temperature == TemperatureUnits.celsius;
+    } else {
+      isCelsius = true;
+    }
 
     var dateFormatter = DateFormatter();
 
