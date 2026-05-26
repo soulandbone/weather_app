@@ -9,3 +9,10 @@ class AppThemeLoaded extends AppThemeState {
 
   final bool isDark;
 }
+
+class AppThemeError extends AppThemeState {
+  AppThemeError({required this.message, required this.previous});
+
+  final String message;
+  final AppThemeLoaded previous;
+}

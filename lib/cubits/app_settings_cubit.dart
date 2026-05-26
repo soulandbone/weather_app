@@ -9,7 +9,7 @@ import 'package:weather_app/enums/wind_units.dart';
 
 class AppSettingsCubit extends Cubit<SettingsState> {
   AppSettingsCubit() : super(SettingsLoading()) {
-    _loadState();
+    _loadState(); // gets all the info from sharedPreferences, and then sets state with the corresponding values
   }
 
   Future<void> _loadState() async {
@@ -39,6 +39,10 @@ class AppSettingsCubit extends Cubit<SettingsState> {
   Future<void> setTempUnits(TemperatureUnits temperature) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isCelsius', TemperatureUnits.celsius == temperature);
+
+    final current = state;
+
+    if (current is! SettingsLoaded) return;
 
     emit((state as SettingsLoaded).copyWith(temperature: temperature));
   }

@@ -15,7 +15,7 @@ void setup() {
   ); //
 
   getIt.registerLazySingleton<WeatherRepository>(
-    () => WeatherRepositoryImpl(getIt()),
+    () => WeatherRepositoryImpl(getIt<ApiService>()),
   );
   getIt.registerFactory<WeatherCubit>(
     () => WeatherCubit(getIt<WeatherRepository>(), getIt<GeolocationService>()),

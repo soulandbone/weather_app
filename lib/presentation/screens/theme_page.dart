@@ -3,35 +3,54 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/cubits/app_theme_cubit.dart';
 import 'package:weather_app/cubits/app_theme_state.dart';
 
-class ThemePage extends StatefulWidget {
+class ThemePage extends StatelessWidget {
   const ThemePage({super.key});
 
   @override
-  State<ThemePage> createState() => _ThemePageState();
-}
-
-class _ThemePageState extends State<ThemePage> {
-  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppThemeCubit, AppThemeState>(
-      builder:
-          (context, state) => Scaffold(
-            appBar: AppBar(),
-            body: Center(
-              child: Column(
-                children: [
-                  SwitchListTile(
-                    title: Text('Dark Theme '),
-
-                    value: (state as AppThemeLoaded).isDark,
-                    onChanged: (value) {
-                      context.read<AppThemeCubit>().toggleTheme();
-                    },
-                  ),
-                ],
+    return BlocListener<AppThemeCubit, AppThemeState>(
+      listener: (context, state) {
+        if (state is AppThemeError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              action: SnackBarAction(
+                label: 'Retry',
+                onPressed: () {
+                  context.read<AppThemeCubit>().toggleTheme();
+                },
               ),
             ),
-          ),
+          );
+          context.read<AppThemeCubit>().restorePreviousState(state.previous);
+        }
+      },
+      child: BlocBuilder<AppThemeCubit, AppThemeState>(
+        builder: (context, state) {
+          if (state is AppThemeLoaded) {
+            return Scaffold(
+              appBar: AppBar(),
+              body: Center(
+                child: Column(
+                  children: [
+                    SwitchListTile(
+                      title: const Text('Dark Theme '),
+
+                      value: state.isDark,
+                      onChanged: (_) {
+                        context.read<AppThemeCubit>().toggleTheme();
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        },
+      ),
     );
   }
 }

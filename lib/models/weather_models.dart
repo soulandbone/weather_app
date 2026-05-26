@@ -1,3 +1,5 @@
+import 'package:weather_app/helpers/date_formatter.dart';
+
 class MainWeatherInfo {
   MainWeatherInfo({
     required this.temperatureCelsius,
@@ -22,6 +24,10 @@ class MainWeatherInfo {
   final String condition;
 
   factory MainWeatherInfo.fromJson(Map<String, dynamic> jsonData) {
+    print(
+      "Country and city are ${jsonData['location']['country']} ${jsonData['location']['name']}",
+    );
+
     return MainWeatherInfo(
       temperatureCelsius: jsonData['current']['temp_c'].toString(),
       temperatureFahrenheit: jsonData['current']['temp_f'].toString(),
@@ -45,12 +51,13 @@ class HourbyHourDetails {
   final List<dynamic> hourlyData; //refine the data type
 
   factory HourbyHourDetails.fromJson(Map<String, dynamic> jsonData) {
+    print(("Data is ${jsonData['forecast']['forecastday'][0]['hour']}"));
     return HourbyHourDetails(
       hourlyData:
           (jsonData['forecast']['forecastday'][0]['hour'])
               .map(
                 (entry) => HourlyWeatherDetails(
-                  time: entry['wind_dir'],
+                  time: DateFormatter().getRegularTime(entry['time']),
                   stringUrl:
                       entry['condition']['icon'].substring(0, 2) == '//'
                           ? 'https:${entry['condition']['icon']}'

@@ -41,38 +41,20 @@ class _HomePageState extends State<HomePage> {
             onSelected: (value) {
               switch (value) {
                 case 'Theme':
-                  print('Theme has been chosen');
+                  Navigator.of(
+                    context,
+                  ).push(MaterialPageRoute(builder: (context) => ThemePage()));
                   break;
                 case 'Units':
-                  print('Measurement units have been chosen');
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => SettingsPage()),
+                  );
               }
             },
             itemBuilder:
                 (BuildContext context) => [
-                  PopupMenuItem(
-                    value: 'Theme',
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => ThemePage()),
-                        );
-                      },
-                      child: Text('Theme & Images'),
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: 'Units',
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => SettingsPage(),
-                          ),
-                        );
-                      },
-                      child: Text('Units'),
-                    ),
-                  ),
+                  PopupMenuItem(value: 'Theme', child: Text('Theme & Images')),
+                  PopupMenuItem(value: 'Units', child: Text('Units')),
                 ],
           ),
         ],
@@ -100,7 +82,21 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           } else if (state is WeatherError) {
-            return Center(child: Text(state.message));
+            return Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(state.message),
+                  const SizedBox(height: 8),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<WeatherCubit>().fetchLocationAndWeather();
+                    },
+                    child: const Text('Retry'),
+                  ),
+                ],
+              ),
+            );
           }
           return Container();
         },

@@ -29,4 +29,10 @@ class DateFormatter {
         return 'th';
     }
   }
+
+  String getRegularTime(String time) {
+    final parsedData = DateFormat('yyyy-MM-dd HH:mm').parse(time);
+    final time24 = DateFormat.Hm().format(parsedData);
+    return time24;
+  }
 }
