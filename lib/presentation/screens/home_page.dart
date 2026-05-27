@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:gap/gap.dart';
+import 'package:weather_app/cubits/app_settings_cubit.dart';
+import 'package:weather_app/cubits/app_settings_state.dart';
 import 'package:weather_app/cubits/weather_cubit.dart';
 
 import 'package:weather_app/cubits/weather_state.dart';
+import 'package:weather_app/enums/temperature_units.dart';
 
 import 'package:weather_app/presentation/screens/settings_page.dart';
 import 'package:weather_app/presentation/screens/theme_page.dart';
@@ -20,8 +23,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool isCelsius = true;
-
   @override
   void initState() {
     super.initState();
@@ -31,6 +32,14 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isCelsius = context.select<AppSettingsCubit, bool>((cubit) {
+      final currentState = cubit.state;
+      if (currentState is SettingsLoaded) {
+        return currentState.temperature == TemperatureUnits.celsius;
+      } else {
+        return true;
+      }
+    });
     return Scaffold(
       appBar: AppBar(
         title: Text('Weather App'),
@@ -74,7 +83,10 @@ class _HomePageState extends State<HomePage> {
                 physics: AlwaysScrollableScrollPhysics(),
                 child: Column(
                   children: [
-                    MainContainer(mainWeatherInfo: state.mainWeatherInfo),
+                    MainContainer(
+                      mainWeatherInfo: state.mainWeatherInfo,
+                      isCelsius: isCelsius,
+                    ),
                     Gap(10),
                     Text(state.mainWeatherInfo.locationCity),
                     Gap(10),
@@ -84,6 +96,7 @@ class _HomePageState extends State<HomePage> {
                     ScrollableRow(
                       height: 105,
                       hourbyHourDetails: state.hourByHourDetails,
+                      isCelsius: isCelsius,
                     ),
                   ],
                 ),

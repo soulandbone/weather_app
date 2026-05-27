@@ -11,6 +11,7 @@ class MainWeatherInfo {
     required this.humidity,
     required this.rainChance,
     required this.condition,
+    required this.imageUrl,
   });
 
   final String temperatureCelsius;
@@ -22,6 +23,7 @@ class MainWeatherInfo {
   final String humidity;
   final String rainChance;
   final String condition;
+  final String imageUrl;
 
   factory MainWeatherInfo.fromJson(Map<String, dynamic> jsonData) {
     print(
@@ -40,6 +42,10 @@ class MainWeatherInfo {
       rainChance:
           jsonData['forecast']['forecastday'][0]['day']['daily_chance_of_rain']
               .toString(),
+      imageUrl:
+          jsonData['current']['condition']['icon'].substring(0, 2) == '//'
+              ? 'https:${jsonData['current']['condition']['icon']}'
+              : jsonData['current']['condition']['icon'],
     );
   }
 }

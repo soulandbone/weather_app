@@ -9,22 +9,17 @@ import 'package:weather_app/models/weather_models.dart';
 import 'package:weather_app/presentation/widgets/details_info.dart';
 
 class MainContainer extends StatelessWidget {
-  const MainContainer({required this.mainWeatherInfo, super.key});
+  const MainContainer({
+    required this.mainWeatherInfo,
+    required this.isCelsius,
+    super.key,
+  });
 
   final MainWeatherInfo mainWeatherInfo;
+  final bool isCelsius;
 
   @override
   Widget build(BuildContext context) {
-    bool isCelsius;
-
-    var appState = context.watch<AppSettingsCubit>().state;
-
-    if (appState is SettingsLoaded) {
-      isCelsius = appState.temperature == TemperatureUnits.celsius;
-    } else {
-      isCelsius = true;
-    }
-
     var dateFormatter = DateFormatter();
 
     return Container(
@@ -45,7 +40,7 @@ class MainContainer extends StatelessWidget {
             ),
           ),
           Gap(20),
-          Image.asset('assets/sun.png'),
+          Image.network(mainWeatherInfo.imageUrl, scale: 0.5),
 
           Gap(20),
           Text(

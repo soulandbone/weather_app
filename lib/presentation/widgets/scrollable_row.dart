@@ -5,12 +5,14 @@ import 'package:weather_app/presentation/widgets/oval_time_snap.dart';
 class ScrollableRow extends StatefulWidget {
   const ScrollableRow({
     required this.height,
-    required this.hourbyHourDetails, // this has to be a list
+    required this.hourbyHourDetails,
+    required this.isCelsius, // this has to be a list
 
     super.key,
   });
 
   final double height;
+  final bool isCelsius;
   final HourbyHourDetails hourbyHourDetails;
 
   @override
@@ -45,6 +47,7 @@ class _ScrollableRowState extends State<ScrollableRow> {
         itemCount: selected.length,
         itemBuilder:
             (context, index) => OvalTimeSnap(
+              isCelsius: widget.isCelsius,
               onSelection: () {
                 setSelected(index);
               },
