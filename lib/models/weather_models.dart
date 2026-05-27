@@ -51,7 +51,6 @@ class HourbyHourDetails {
   final List<dynamic> hourlyData; //refine the data type
 
   factory HourbyHourDetails.fromJson(Map<String, dynamic> jsonData) {
-    print(("Data is ${jsonData['forecast']['forecastday'][0]['hour']}"));
     return HourbyHourDetails(
       hourlyData:
           (jsonData['forecast']['forecastday'][0]['hour'])
@@ -62,7 +61,8 @@ class HourbyHourDetails {
                       entry['condition']['icon'].substring(0, 2) == '//'
                           ? 'https:${entry['condition']['icon']}'
                           : entry['condition']['icon'],
-                  temperature: entry['temp_c'].toString(),
+                  temperatureCelsius: entry['temp_c'].toString(),
+                  temperatureFahrenheit: entry['temp_f'].toString(),
                 ),
               )
               .toList(),
@@ -75,10 +75,12 @@ class HourlyWeatherDetails {
   HourlyWeatherDetails({
     required this.time,
     required this.stringUrl,
-    required this.temperature,
+    required this.temperatureCelsius,
+    required this.temperatureFahrenheit,
   });
 
   final String time;
   final String stringUrl;
-  final String temperature;
+  final String temperatureCelsius;
+  final String temperatureFahrenheit;
 }

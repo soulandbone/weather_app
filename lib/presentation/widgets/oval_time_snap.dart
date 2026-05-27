@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/cubits/app_settings_cubit.dart';
+import 'package:weather_app/cubits/app_settings_state.dart';
+import 'package:weather_app/enums/temperature_units.dart';
 import 'package:weather_app/models/weather_models.dart';
 
 class OvalTimeSnap extends StatelessWidget {
@@ -14,6 +18,16 @@ class OvalTimeSnap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isCelsius = context.select<AppSettingsCubit, bool>((cubit) {
+      final state = cubit.state;
+
+      if (state is SettingsLoaded) {
+        return state.temperature == TemperatureUnits.celsius;
+      } else {
+        return true;
+      }
+    });
+
     return GestureDetector(
       onTap: onSelection,
       child: Container(
@@ -28,11 +42,13 @@ class OvalTimeSnap extends StatelessWidget {
 
           children: [
             Text(
-              hourlyWeatherDetails.temperature,
+              isCelsius
+                  ? hourlyWeatherDetails.temperatureCelsius
+                  : hourlyWeatherDetails.temperatureFahrenheit,
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 8,
+                fontSize: 10,
               ),
             ),
             Image.network(hourlyWeatherDetails.stringUrl),

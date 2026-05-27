@@ -26,10 +26,10 @@ class WeatherCubit extends Cubit<WeatherState> {
         position.latitude,
         position.longitude,
       );
-      print("Placemarks are $placemarks");
+      // print("Placemarks are $placemarks");
       if (placemarks.isNotEmpty) {
         final place = placemarks.first;
-        print("place is ${placemarks.first}");
+        // print("place is ${placemarks.first}");
         final locality = place.locality ?? 'Unknown locality';
         final country = place.country ?? 'Unknown country';
 

@@ -27,7 +27,7 @@ class DetailsInfo extends StatelessWidget {
           ),
           Gap(5),
           DetailsCard(
-            icon: Icons.water,
+            icon: Icons.water_drop_sharp,
             title: '$humidity%',
             subtitle: 'Humidity',
           ),
