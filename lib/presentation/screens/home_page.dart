@@ -64,21 +64,29 @@ class _HomePageState extends State<HomePage> {
           if (state is WeatherLoading) {
             return Center(child: CircularProgressIndicator());
           } else if (state is WeatherLoaded) {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  MainContainer(mainWeatherInfo: state.mainWeatherInfo),
-                  Gap(10),
-                  Text(state.mainWeatherInfo.locationCity),
-                  Gap(10),
-                  SwitchPeriod(),
-                  Gap(10),
+            return RefreshIndicator(
+              key: ValueKey("refresh"),
+              onRefresh: () {
+                return context.read<WeatherCubit>().fetchLocationAndWeather();
+              },
 
-                  ScrollableRow(
-                    height: 105,
-                    hourbyHourDetails: state.hourByHourDetails,
-                  ),
-                ],
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  children: [
+                    MainContainer(mainWeatherInfo: state.mainWeatherInfo),
+                    Gap(10),
+                    Text(state.mainWeatherInfo.locationCity),
+                    Gap(10),
+                    SwitchPeriod(),
+                    Gap(10),
+
+                    ScrollableRow(
+                      height: 105,
+                      hourbyHourDetails: state.hourByHourDetails,
+                    ),
+                  ],
+                ),
               ),
             );
           } else if (state is WeatherError) {
