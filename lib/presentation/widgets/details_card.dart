@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class DetailsCard extends StatelessWidget {
   const DetailsCard({
@@ -11,13 +11,13 @@ class DetailsCard extends StatelessWidget {
 
   final String title;
   final String subtitle;
-  final IconData icon;
+  final HugeIcon icon;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        FaIcon(icon, color: Colors.white),
+        icon,
         Text(
           title,
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),

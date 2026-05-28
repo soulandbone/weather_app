@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:gap/gap.dart';
-import 'package:weather_app/cubits/app_settings_cubit.dart';
-import 'package:weather_app/cubits/app_settings_state.dart';
-import 'package:weather_app/enums/temperature_units.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import 'package:weather_app/helpers/date_formatter.dart';
 import 'package:weather_app/models/weather_models.dart';
 import 'package:weather_app/presentation/widgets/details_info.dart';
@@ -33,26 +32,45 @@ class MainContainer extends StatelessWidget {
 
       child: Column(
         children: [
+          Gap(20),
           Center(
             child: Text(
               mainWeatherInfo.locationCity,
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
             ),
           ),
           Gap(20),
-          Image.network(mainWeatherInfo.imageUrl, scale: 0.5),
+          Image.network(mainWeatherInfo.imageUrl, scale: 0.4),
 
           Gap(20),
-          Text(
-            isCelsius
-                ? '${mainWeatherInfo.temperatureCelsius} °C'
-                : '${mainWeatherInfo.temperatureFahrenheit} °F',
-            style: TextStyle(
-              fontSize: 70,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                isCelsius
+                    ? mainWeatherInfo.temperatureCelsius
+                    : mainWeatherInfo.temperatureFahrenheit,
+                style: GoogleFonts.orbitron(
+                  textStyle: TextStyle(
+                    fontSize: 72,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Text(
+                isCelsius ? '°C' : '°F',
+                style: GoogleFonts.orbitron(
+                  textStyle: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
           ),
+
           Text(mainWeatherInfo.condition, style: TextStyle(fontSize: 24)),
           Text((dateFormatter.formatDate(DateTime.now()))),
           Gap(40),
@@ -60,7 +78,8 @@ class MainContainer extends StatelessWidget {
           Center(
             child: DetailsInfo(
               humidity: mainWeatherInfo.humidity,
-              windSpeed: mainWeatherInfo.windSpeedKm,
+              windSpeedKm: mainWeatherInfo.windSpeedKm,
+              windSpeedMiles: mainWeatherInfo.windSpeedMi,
               rainChance: mainWeatherInfo.rainChance,
             ),
           ),

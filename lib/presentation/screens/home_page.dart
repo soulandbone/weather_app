@@ -88,8 +88,7 @@ class _HomePageState extends State<HomePage> {
                       isCelsius: isCelsius,
                     ),
                     Gap(10),
-                    Text(state.mainWeatherInfo.locationCity),
-                    Gap(10),
+
                     SwitchPeriod(),
                     Gap(10),
 
