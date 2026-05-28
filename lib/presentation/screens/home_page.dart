@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
     });
     return Scaffold(
       appBar: AppBar(
-        title: Text('Weather App'),
+        title: const Text('Weather App'),
         actions: [
           PopupMenuButton(
             onOpened: () {},
@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
       body: BlocBuilder<WeatherCubit, WeatherState>(
         builder: (context, state) {
           if (state is WeatherLoading) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (state is WeatherLoaded) {
             return RefreshIndicator(
               key: ValueKey("refresh"),
@@ -87,13 +87,13 @@ class _HomePageState extends State<HomePage> {
                       mainWeatherInfo: state.mainWeatherInfo,
                       isCelsius: isCelsius,
                     ),
-                    Gap(10),
+                    const Gap(10),
 
                     SwitchPeriod(),
-                    Gap(10),
+                    const Gap(10),
 
                     ScrollableRow(
-                      height: 105,
+                      height: 125,
                       hourbyHourDetails: state.hourByHourDetails,
                       isCelsius: isCelsius,
                     ),
@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           }
-          return Container();
+          return const SizedBox.shrink();
         },
       ),
     );

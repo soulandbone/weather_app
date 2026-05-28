@@ -54,7 +54,6 @@ class GeolocationService {
         locationSettings: locationSettings,
       );
 
-      print("Current position is $currentPosition");
       return currentPosition; //returns in latitude, longitude format.
     } catch (_) {
       return lastKownn;

@@ -24,7 +24,7 @@ class MainContainer extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primary,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(30),
           bottomRight: Radius.circular(30),
         ),
@@ -32,17 +32,17 @@ class MainContainer extends StatelessWidget {
 
       child: Column(
         children: [
-          Gap(20),
+          const Gap(20),
           Center(
             child: Text(
-              mainWeatherInfo.locationCity,
-              style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+              "${mainWeatherInfo.locationCity},${mainWeatherInfo.locationCountry}  ",
+              style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
             ),
           ),
-          Gap(20),
+          const Gap(20),
           Image.network(mainWeatherInfo.imageUrl, scale: 0.4),
 
-          Gap(20),
+          const Gap(20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -51,7 +51,7 @@ class MainContainer extends StatelessWidget {
                     ? mainWeatherInfo.temperatureCelsius
                     : mainWeatherInfo.temperatureFahrenheit,
                 style: GoogleFonts.orbitron(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 72,
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
@@ -61,7 +61,7 @@ class MainContainer extends StatelessWidget {
               Text(
                 isCelsius ? '°C' : '°F',
                 style: GoogleFonts.orbitron(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
@@ -71,10 +71,10 @@ class MainContainer extends StatelessWidget {
             ],
           ),
 
-          Text(mainWeatherInfo.condition, style: TextStyle(fontSize: 24)),
+          Text(mainWeatherInfo.condition, style: const TextStyle(fontSize: 24)),
           Text((dateFormatter.formatDate(DateTime.now()))),
-          Gap(40),
-          Divider(color: Colors.white54, thickness: 1),
+          const Gap(40),
+          const Divider(color: Colors.white54, thickness: 1),
           Center(
             child: DetailsInfo(
               humidity: mainWeatherInfo.humidity,
@@ -83,7 +83,7 @@ class MainContainer extends StatelessWidget {
               rainChance: mainWeatherInfo.rainChance,
             ),
           ),
-          Gap(40),
+          const Gap(40),
         ],
       ),
     );

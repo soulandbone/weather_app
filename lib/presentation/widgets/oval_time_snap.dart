@@ -32,8 +32,8 @@ class OvalTimeSnap extends StatelessWidget {
           children: [
             Text(
               isCelsius
-                  ? hourlyWeatherDetails.temperatureCelsius
-                  : hourlyWeatherDetails.temperatureFahrenheit,
+                  ? "${hourlyWeatherDetails.temperatureCelsius} °C"
+                  : "${hourlyWeatherDetails.temperatureFahrenheit} °F",
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -43,7 +43,7 @@ class OvalTimeSnap extends StatelessWidget {
             Image.network(hourlyWeatherDetails.stringUrl),
             Text(
               hourlyWeatherDetails.time,
-              style: TextStyle(fontSize: 8, color: Colors.white),
+              style: TextStyle(fontSize: 11, color: Colors.white),
             ),
           ],
         ),
