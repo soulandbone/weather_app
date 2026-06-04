@@ -91,8 +91,8 @@ class _HomePageState extends State<HomePage> {
 
                     ScrollableRow(
                       height: 125,
-                      hourbyHourDetails:
-                          state.weatherResponse.hourByHourDetails,
+                      details:
+                          state.weatherResponse.hourByHourDetails.hourlyData,
                       isCelsius: isCelsius,
                     ),
                   ],

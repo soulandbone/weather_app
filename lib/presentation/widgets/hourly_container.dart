@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:weather_app/models/weather_models.dart';
 
-class OvalTimeSnap extends StatelessWidget {
-  const OvalTimeSnap({
+class HourlyContainer extends StatelessWidget {
+  const HourlyContainer({
     required this.hourlyWeatherDetails,
     required this.isSelected,
     required this.onSelection,

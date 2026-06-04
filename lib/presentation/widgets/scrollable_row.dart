@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/models/weather_models.dart';
-import 'package:weather_app/presentation/widgets/oval_time_snap.dart';
+import 'package:weather_app/presentation/widgets/hourly_container.dart';
 
-class ScrollableRow extends StatefulWidget {
+class ScrollableRow<T> extends StatefulWidget {
   const ScrollableRow({
     required this.height,
-    required this.hourbyHourDetails,
+    required this.details,
     required this.isCelsius, // this has to be a list
 
     super.key,
@@ -13,7 +12,7 @@ class ScrollableRow extends StatefulWidget {
 
   final double height;
   final bool isCelsius;
-  final HourByHourDetails hourbyHourDetails;
+  final List<T> details;
 
   @override
   State<ScrollableRow> createState() => _ScrollableRowState();
@@ -25,7 +24,7 @@ class _ScrollableRowState extends State<ScrollableRow> {
   @override
   void initState() {
     super.initState();
-    selected = List.filled(widget.hourbyHourDetails.hourlyData.length, false);
+    selected = List.filled(widget.details.length, false);
   }
 
   void setSelected(int index) {
@@ -45,13 +44,13 @@ class _ScrollableRowState extends State<ScrollableRow> {
         scrollDirection: Axis.horizontal,
         itemCount: selected.length,
         itemBuilder:
-            (context, index) => OvalTimeSnap(
+            (context, index) => HourlyContainer(
               isCelsius: widget.isCelsius,
               onSelection: () {
                 setSelected(index);
               },
               isSelected: selected[index],
-              hourlyWeatherDetails: widget.hourbyHourDetails.hourlyData[index],
+              hourlyWeatherDetails: widget.details[index],
             ),
       ),
     );
