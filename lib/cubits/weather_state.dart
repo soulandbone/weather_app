@@ -11,15 +11,17 @@ class WeatherLoading extends WeatherState {
 }
 
 class WeatherLoaded extends WeatherState {
-  WeatherLoaded({
-    required this.mainWeatherInfo,
-    required this.hourByHourDetails,
-  });
+  WeatherLoaded({required this.weatherResponse});
 
-  final MainWeatherInfo mainWeatherInfo;
-  final HourbyHourDetails hourByHourDetails;
+  final WeatherResponse weatherResponse;
 
   //State the moment we have loaded the data. It Returns the data
+}
+
+class ForecastLoaded extends WeatherState {
+  ForecastLoaded({required this.forecastResponse});
+
+  final SevenDaysForecast forecastResponse;
 }
 
 class WeatherError extends WeatherState {

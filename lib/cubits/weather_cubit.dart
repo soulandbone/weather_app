@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/cubits/weather_state.dart';
 import 'package:weather_app/repositories/weather_repository.dart';
 import 'package:weather_app/services/geo_location_service.dart';
@@ -13,6 +14,9 @@ class WeatherCubit extends Cubit<WeatherState> {
 
   Future<void> fetchLocationAndWeather() async {
     emit(WeatherLoading());
+    print("The time now is ${DateTime.now().toIso8601String()}");
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('lastRequest', DateTime.now().toIso8601String());
 
     try {
       final position = await geolocationService.getCurrentPosition();
@@ -32,25 +36,44 @@ class WeatherCubit extends Cubit<WeatherState> {
         // print("place is ${placemarks.first}");
         final locality = place.locality ?? 'Unknown locality';
         final country = place.country ?? 'Unknown country';
+        await prefs.setString('lastLocationCity', locality);
+        await prefs.setString('lastLocationCountry', country);
 
-        var mainWeatherInfo = await repository.getWeatherData(
+        var weatherResponse = await repository.getWeatherData(
           locality,
           country,
         ); // problem here, is that if we just search by locality, the weather api just gives Quintero in Mexico for example
-        var hourByHourDetails = await repository.getWeatherHourByHourDetails(
-          locality,
-          country,
-        );
 
-        emit(
-          WeatherLoaded(
-            mainWeatherInfo: mainWeatherInfo,
-            hourByHourDetails: hourByHourDetails,
-          ),
-        );
+        emit(WeatherLoaded(weatherResponse: weatherResponse));
       }
     } catch (e) {
       emit(WeatherError(e.toString()));
+    }
+  }
+
+  Future<void> fetchLocationAnd7DaysForecast() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var timeNow = DateTime.now();
+    var lastConnectionString = prefs.getString('lastRequest');
+
+    if (lastConnectionString != null) {
+      var lastConnectionDate = DateTime.parse(lastConnectionString);
+      var difference = timeNow.difference(lastConnectionDate);
+
+      String city;
+      String country;
+
+      if (difference.inHours < 1) {
+        city = prefs.getString('lastLocationCity')!;
+        country = prefs.getString('lastLocationCountry')!;
+
+        var forecastResponse = await repository.getSevenDaysForecast(
+          city,
+          country,
+        );
+        emit(ForecastLoaded(forecastResponse: forecastResponse));
+      }
     }
   }
 }

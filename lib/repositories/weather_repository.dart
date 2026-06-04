@@ -2,11 +2,8 @@ import 'package:weather_app/models/weather_models.dart';
 import 'package:weather_app/services/api_service.dart';
 
 abstract class WeatherRepository {
-  Future<MainWeatherInfo> getWeatherData(String city, String country);
-  Future<HourbyHourDetails> getWeatherHourByHourDetails(
-    String city,
-    String country,
-  );
+  Future<WeatherResponse> getWeatherData(String city, String country);
+  Future<SevenDaysForecast> getSevenDaysForecast(String city, String country);
 }
 
 class WeatherRepositoryImpl implements WeatherRepository {
@@ -15,19 +12,19 @@ class WeatherRepositoryImpl implements WeatherRepository {
   final ApiService apiService;
 
   @override
-  Future<MainWeatherInfo> getWeatherData(String city, String country) async {
+  Future<WeatherResponse> getWeatherData(String city, String country) async {
     var weatherInfo = await apiService.fetchData(city, country);
 
-    return MainWeatherInfo.fromJson(weatherInfo);
+    return WeatherResponse.fromJson(weatherInfo);
   }
 
   @override
-  Future<HourbyHourDetails> getWeatherHourByHourDetails(
+  Future<SevenDaysForecast> getSevenDaysForecast(
     String city,
     String country,
   ) async {
-    var weatherHourByHourDetails = await apiService.fetchData(city, country);
+    var weatherInfo = await apiService.fetchData(city, country, days: 7);
 
-    return HourbyHourDetails.fromJson(weatherHourByHourDetails);
+    return SevenDaysForecast.fromJson(weatherInfo);
   }
 }

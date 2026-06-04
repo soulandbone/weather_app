@@ -4,15 +4,23 @@ import 'package:http/http.dart' as http;
 import 'package:weather_app/secrets/secrets.dart';
 
 abstract class ApiService {
-  Future<Map<String, dynamic>> fetchData(String city, String country);
+  Future<Map<String, dynamic>> fetchData(
+    String city,
+    String country, {
+    int days = 1,
+  });
 }
 
 class ApiServiceImpl implements ApiService {
   @override
-  Future<Map<String, dynamic>> fetchData(String city, String country) async {
+  Future<Map<String, dynamic>> fetchData(
+    String city,
+    String country, {
+    int days = 1,
+  }) async {
     var url = Uri.https('api.weatherapi.com', '/v1/forecast.json', {
       'key': kApiKey,
-      'days': '1',
+      'days': days.toString(),
       'aqi': 'yes',
       'alerts': 'yes',
       'q': "$city,$country",

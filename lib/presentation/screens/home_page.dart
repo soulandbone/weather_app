@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:gap/gap.dart';
 import 'package:weather_app/cubits/app_settings_cubit.dart';
 import 'package:weather_app/cubits/app_settings_state.dart';
 import 'package:weather_app/cubits/weather_cubit.dart';
-
 import 'package:weather_app/cubits/weather_state.dart';
 import 'package:weather_app/enums/temperature_units.dart';
-
 import 'package:weather_app/presentation/screens/settings_page.dart';
 import 'package:weather_app/presentation/screens/theme_page.dart';
 import 'package:weather_app/presentation/widgets/main_container.dart';
@@ -84,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   children: [
                     MainContainer(
-                      mainWeatherInfo: state.mainWeatherInfo,
+                      mainWeatherInfo: state.weatherResponse.mainWeatherInfo,
                       isCelsius: isCelsius,
                     ),
                     const Gap(10),
@@ -94,7 +91,8 @@ class _HomePageState extends State<HomePage> {
 
                     ScrollableRow(
                       height: 125,
-                      hourbyHourDetails: state.hourByHourDetails,
+                      hourbyHourDetails:
+                          state.weatherResponse.hourByHourDetails,
                       isCelsius: isCelsius,
                     ),
                   ],

@@ -14,34 +14,31 @@ class MainWeatherInfo {
     required this.imageUrl,
   });
 
-  final String temperatureCelsius;
-  final String temperatureFahrenheit;
+  final double temperatureCelsius;
+  final double temperatureFahrenheit;
   final String locationCity;
   final String locationCountry;
-  final String windSpeedKm;
-  final String windSpeedMi;
-  final String humidity;
-  final String rainChance;
+  final double windSpeedKm;
+  final double windSpeedMi;
+  final int humidity;
+  final int rainChance;
   final String condition;
   final String imageUrl;
 
   factory MainWeatherInfo.fromJson(Map<String, dynamic> jsonData) {
-    print(
-      "Country and city are ${jsonData['location']['country']} ${jsonData['location']['name']}",
-    );
-
     return MainWeatherInfo(
-      temperatureCelsius: jsonData['current']['temp_c'].toString(),
-      temperatureFahrenheit: jsonData['current']['temp_f'].toString(),
+      temperatureCelsius: (jsonData['current']['temp_c'] as num).toDouble(),
+      temperatureFahrenheit: (jsonData['current']['temp_f'] as num).toDouble(),
       locationCity: jsonData['location']['name'],
       locationCountry: jsonData['location']['country'],
       condition: jsonData['current']['condition']['text'],
-      windSpeedKm: jsonData['current']['wind_kph'].toString(),
-      windSpeedMi: jsonData['current']['wind_mph'].toString(),
-      humidity: jsonData['current']['humidity'].toString(),
+      windSpeedKm: (jsonData['current']['wind_kph'] as num).toDouble(),
+      windSpeedMi: (jsonData['current']['wind_mph'] as num).toDouble(),
+      humidity: (jsonData['current']['humidity'] as num).toInt(),
       rainChance:
-          jsonData['forecast']['forecastday'][0]['day']['daily_chance_of_rain']
-              .toString(),
+          (jsonData['forecast']['forecastday'][0]['day']['daily_chance_of_rain']
+                  as num)
+              .toInt(),
       imageUrl:
           jsonData['current']['condition']['icon'].substring(0, 2) == '//'
               ? 'https:${jsonData['current']['condition']['icon']}'
@@ -50,26 +47,18 @@ class MainWeatherInfo {
   }
 }
 
-class HourbyHourDetails {
+class HourByHourDetails {
   // this to encapsulate all the possible hours of the day
-  HourbyHourDetails({required this.hourlyData});
+  HourByHourDetails({required this.hourlyData});
 
-  final List<dynamic> hourlyData; //refine the data type
+  final List<HourlyWeatherDetails> hourlyData; //refine the data type
 
-  factory HourbyHourDetails.fromJson(Map<String, dynamic> jsonData) {
-    return HourbyHourDetails(
+  factory HourByHourDetails.fromJson(Map<String, dynamic> jsonData) {
+    return HourByHourDetails(
       hourlyData:
-          (jsonData['forecast']['forecastday'][0]['hour'])
-              .map(
-                (entry) => HourlyWeatherDetails(
-                  time: DateFormatter().getRegularTime(entry['time']),
-                  stringUrl:
-                      entry['condition']['icon'].substring(0, 2) == '//'
-                          ? 'https:${entry['condition']['icon']}'
-                          : entry['condition']['icon'],
-                  temperatureCelsius: entry['temp_c'].toString(),
-                  temperatureFahrenheit: entry['temp_f'].toString(),
-                ),
+          jsonData['forecast']['forecastday'][0]['hour']
+              .map<HourlyWeatherDetails>(
+                (entry) => HourlyWeatherDetails.fromJson(entry),
               )
               .toList(),
     );
@@ -87,6 +76,103 @@ class HourlyWeatherDetails {
 
   final String time;
   final String stringUrl;
-  final String temperatureCelsius;
-  final String temperatureFahrenheit;
+  final double temperatureCelsius;
+  final double temperatureFahrenheit;
+
+  factory HourlyWeatherDetails.fromJson(Map<String, dynamic> json) {
+    //this is partial json, not the whole jsonData object, because it starts from jsonData['forecast']['forecastday'][0]['hour']
+    final time = DateFormatter().getRegularTime(json['time']);
+    final stringUrl =
+        json['condition']['icon'].substring(0, 2) == '//'
+            ? 'https:${json['condition']['icon']}'
+            : json['condition']['icon'];
+    final temperatureCelsius = (json['temp_c'] as num).toDouble();
+    final temperatureFahrenheit = (json['temp_f'] as num).toDouble();
+
+    return HourlyWeatherDetails(
+      time: time,
+      stringUrl: stringUrl,
+      temperatureCelsius: temperatureCelsius,
+      temperatureFahrenheit: temperatureFahrenheit,
+    );
+  }
+}
+
+class WeatherResponse {
+  WeatherResponse({
+    required this.mainWeatherInfo,
+    required this.hourByHourDetails,
+  });
+  final MainWeatherInfo mainWeatherInfo;
+  final HourByHourDetails hourByHourDetails;
+
+  factory WeatherResponse.fromJson(Map<String, dynamic> jsonData) {
+    var mainWeatherData = MainWeatherInfo.fromJson(jsonData);
+    var hourByHourDetailsData = HourByHourDetails.fromJson(jsonData);
+
+    return WeatherResponse(
+      mainWeatherInfo: mainWeatherData,
+      hourByHourDetails: hourByHourDetailsData,
+    );
+  }
+}
+
+class SevenDaysForecast {
+  SevenDaysForecast(this.forecastDays);
+
+  final List<DailyForecast> forecastDays;
+
+  factory SevenDaysForecast.fromJson(Map<String, dynamic> jsonData) {
+    final listOfDays =
+        jsonData['forecast']['forecastday'] as List; //list of days
+
+    final listOfSevenDays = listOfDays.skip(1).take(7);
+
+    final result =
+        listOfSevenDays
+            .map<DailyForecast>((e) => DailyForecast.fromJson(e))
+            .toList();
+
+    return SevenDaysForecast(result);
+  }
+}
+
+class DailyForecast {
+  DailyForecast({
+    required this.maxTempF,
+    required this.maxTempC,
+    required this.minTempC,
+    required this.minTempF,
+    required this.avgTempC,
+    required this.avgTempF,
+    required this.condition,
+  });
+
+  final double maxTempF;
+  final double maxTempC;
+  final double minTempC;
+  final double minTempF;
+  final double avgTempC;
+  final double avgTempF;
+  final String condition;
+
+  factory DailyForecast.fromJson(Map<String, dynamic> json) {
+    final maxTempF = json['day']['maxtemp_f'];
+    final maxTempC = json['day']['maxtemp_c'];
+    final minTempC = json['day']['mintemp_c'];
+    final minTempF = json['day']['mintemp_f'];
+    final avgTempC = json['day']['avgtemp_c'];
+    final avgTempF = json['day']['avgtemp_f'];
+    final condition = json['day']['condition']['text'];
+
+    return DailyForecast(
+      maxTempF: maxTempF,
+      maxTempC: maxTempC,
+      minTempC: minTempC,
+      minTempF: minTempF,
+      avgTempC: avgTempC,
+      avgTempF: avgTempF,
+      condition: condition,
+    );
+  }
 }

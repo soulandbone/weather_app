@@ -48,8 +48,8 @@ class MainContainer extends StatelessWidget {
             children: [
               Text(
                 isCelsius
-                    ? mainWeatherInfo.temperatureCelsius
-                    : mainWeatherInfo.temperatureFahrenheit,
+                    ? mainWeatherInfo.temperatureCelsius.toString()
+                    : mainWeatherInfo.temperatureFahrenheit.toString(),
                 style: GoogleFonts.orbitron(
                   textStyle: const TextStyle(
                     fontSize: 72,
@@ -77,10 +77,10 @@ class MainContainer extends StatelessWidget {
           const Divider(color: Colors.white54, thickness: 1),
           Center(
             child: DetailsInfo(
-              humidity: mainWeatherInfo.humidity,
-              windSpeedKm: mainWeatherInfo.windSpeedKm,
-              windSpeedMiles: mainWeatherInfo.windSpeedMi,
-              rainChance: mainWeatherInfo.rainChance,
+              humidity: mainWeatherInfo.humidity.toString(),
+              windSpeedKm: mainWeatherInfo.windSpeedKm.toString(),
+              windSpeedMiles: mainWeatherInfo.windSpeedMi.toString(),
+              rainChance: mainWeatherInfo.rainChance.toString(),
             ),
           ),
           const Gap(40),

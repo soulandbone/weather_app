@@ -13,7 +13,7 @@ class ScrollableRow extends StatefulWidget {
 
   final double height;
   final bool isCelsius;
-  final HourbyHourDetails hourbyHourDetails;
+  final HourByHourDetails hourbyHourDetails;
 
   @override
   State<ScrollableRow> createState() => _ScrollableRowState();
@@ -26,7 +26,6 @@ class _ScrollableRowState extends State<ScrollableRow> {
   void initState() {
     super.initState();
     selected = List.filled(widget.hourbyHourDetails.hourlyData.length, false);
-    print(widget.hourbyHourDetails.hourlyData.length);
   }
 
   void setSelected(int index) {
