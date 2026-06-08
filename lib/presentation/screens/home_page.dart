@@ -8,6 +8,7 @@ import 'package:weather_app/cubits/weather_state.dart';
 import 'package:weather_app/enums/temperature_units.dart';
 import 'package:weather_app/presentation/screens/settings_page.dart';
 import 'package:weather_app/presentation/screens/theme_page.dart';
+import 'package:weather_app/presentation/widgets/hourly_container.dart';
 import 'package:weather_app/presentation/widgets/main_container.dart';
 import 'package:weather_app/presentation/widgets/scrollable_row.dart';
 import 'package:weather_app/presentation/widgets/switch_period.dart';
@@ -94,6 +95,18 @@ class _HomePageState extends State<HomePage> {
                       details:
                           state.weatherResponse.hourByHourDetails.hourlyData,
                       isCelsius: isCelsius,
+                      itemBuilder:
+                          (context, index, onSelection, selected) =>
+                              HourlyContainer(
+                                hourlyWeatherDetails:
+                                    state
+                                        .weatherResponse
+                                        .hourByHourDetails
+                                        .hourlyData[index],
+                                isSelected: selected,
+                                onSelection: onSelection,
+                                isCelsius: isCelsius,
+                              ),
                     ),
                   ],
                 ),

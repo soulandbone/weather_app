@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/presentation/widgets/hourly_container.dart';
 
 class ScrollableRow<T> extends StatefulWidget {
   const ScrollableRow({
     required this.height,
     required this.details,
-    required this.isCelsius, // this has to be a list
+    required this.isCelsius,
+    required this.itemBuilder, // this has to be a list
 
     super.key,
   });
@@ -13,6 +13,13 @@ class ScrollableRow<T> extends StatefulWidget {
   final double height;
   final bool isCelsius;
   final List<T> details;
+  final Widget Function({
+    required BuildContext context,
+    required int index,
+    required VoidCallback onSelection,
+    required bool selected,
+  })
+  itemBuilder;
 
   @override
   State<ScrollableRow> createState() => _ScrollableRowState();
@@ -43,15 +50,14 @@ class _ScrollableRowState extends State<ScrollableRow> {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: selected.length,
-        itemBuilder:
-            (context, index) => HourlyContainer(
-              isCelsius: widget.isCelsius,
-              onSelection: () {
-                setSelected(index);
-              },
-              isSelected: selected[index],
-              hourlyWeatherDetails: widget.details[index],
-            ),
+        itemBuilder: (context, index) {
+          return widget.itemBuilder(
+            context: context,
+            index: index,
+            onSelection: () => setSelected(index),
+            selected: selected[index],
+          );
+        },
       ),
     );
   }
