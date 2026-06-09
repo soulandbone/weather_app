@@ -22,6 +22,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool oneDay = true;
+
   @override
   void initState() {
     super.initState();
@@ -88,27 +90,67 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const Gap(10),
 
-                    SwitchPeriod(),
+                    SwitchPeriod(
+                      onChanged: (value) {
+                        setState(() {
+                          oneDay = value;
+                        });
+                      },
+                    ),
                     const Gap(10),
-
-                    ScrollableRow<HourlyWeatherDetails>(
-                      height: 125,
-                      details:
-                          state.weatherResponse.hourByHourDetails.hourlyData,
-                      isCelsius: isCelsius,
-                      itemBuilder: (context, index, isSelected, onSelection) {
-                        return HourlyContainer(
-                          hourlyWeatherDetails:
+                    oneDay
+                        ? ScrollableRow<HourlyWeatherDetails>(
+                          height: 125,
+                          details:
                               state
                                   .weatherResponse
                                   .hourByHourDetails
-                                  .hourlyData[index],
-                          isSelected: isSelected,
-                          onSelection: onSelection,
-                          isCelsius: isCelsius,
-                        );
-                      },
-                    ),
+                                  .hourlyData,
+
+                          itemBuilder: (
+                            context,
+                            index,
+                            isSelected,
+                            onSelection,
+                          ) {
+                            return HourlyContainer(
+                              hourlyWeatherDetails:
+                                  state
+                                      .weatherResponse
+                                      .hourByHourDetails
+                                      .hourlyData[index],
+                              isSelected: isSelected,
+                              onSelection: onSelection,
+                              isCelsius: isCelsius,
+                            );
+                          },
+                        )
+                        : ScrollableRow<HourlyWeatherDetails>(
+                          height: 125,
+                          details:
+                              state
+                                  .weatherResponse
+                                  .hourByHourDetails
+                                  .hourlyData,
+
+                          itemBuilder: (
+                            context,
+                            index,
+                            isSelected,
+                            onSelection,
+                          ) {
+                            return HourlyContainer(
+                              hourlyWeatherDetails:
+                                  state
+                                      .weatherResponse
+                                      .hourByHourDetails
+                                      .hourlyData[index],
+                              isSelected: isSelected,
+                              onSelection: onSelection,
+                              isCelsius: true,
+                            );
+                          },
+                        ),
                   ],
                 ),
               ),

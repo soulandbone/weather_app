@@ -4,13 +4,13 @@ class ScrollableRow<T> extends StatefulWidget {
   const ScrollableRow({
     required this.height,
     required this.details,
-    required this.isCelsius,
+
     required this.itemBuilder,
     super.key,
   });
 
   final double height;
-  final bool isCelsius;
+
   final List<T> details;
   final Widget Function(
     BuildContext context,

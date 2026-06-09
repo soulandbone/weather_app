@@ -146,6 +146,7 @@ class DailyForecast {
     required this.avgTempC,
     required this.avgTempF,
     required this.condition,
+    required this.stringUrl,
   });
 
   final double maxTempF;
@@ -155,6 +156,7 @@ class DailyForecast {
   final double avgTempC;
   final double avgTempF;
   final String condition;
+  final String stringUrl;
 
   factory DailyForecast.fromJson(Map<String, dynamic> json) {
     final maxTempF = json['day']['maxtemp_f'];
@@ -165,6 +167,11 @@ class DailyForecast {
     final avgTempF = json['day']['avgtemp_f'];
     final condition = json['day']['condition']['text'];
 
+    final stringUrl =
+        json['day']['condition']['icon'].substring(0, 2) == '//'
+            ? 'https:${json['condition']['icon']}'
+            : json['condition']['icon'];
+
     return DailyForecast(
       maxTempF: maxTempF,
       maxTempC: maxTempC,
@@ -173,6 +180,7 @@ class DailyForecast {
       avgTempC: avgTempC,
       avgTempF: avgTempF,
       condition: condition,
+      stringUrl: stringUrl,
     );
   }
 }

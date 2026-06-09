@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SwitchPeriod extends StatefulWidget {
-  const SwitchPeriod({super.key});
+  const SwitchPeriod({super.key, required this.onChanged});
 
+  final ValueChanged<bool> onChanged;
   @override
   State<SwitchPeriod> createState() => _SwitchPeriodState();
 }
@@ -19,6 +20,7 @@ class _SwitchPeriodState extends State<SwitchPeriod> {
         children: [
           InkWell(
             onTap: () {
+              widget.onChanged(true);
               setState(() {
                 selected[0] = true;
                 selected[1] = false;
@@ -40,6 +42,7 @@ class _SwitchPeriodState extends State<SwitchPeriod> {
 
           InkWell(
             onTap: () {
+              widget.onChanged(false);
               setState(() {
                 selected[0] = false;
                 selected[1] = true;
