@@ -5,20 +5,19 @@ class ScrollableRow<T> extends StatefulWidget {
     required this.height,
     required this.details,
     required this.isCelsius,
-    required this.itemBuilder, // this has to be a list
-
+    required this.itemBuilder,
     super.key,
   });
 
   final double height;
   final bool isCelsius;
   final List<T> details;
-  final Widget Function({
-    required BuildContext context,
-    required int index,
-    required VoidCallback onSelection,
-    required bool selected,
-  })
+  final Widget Function(
+    BuildContext context,
+    int index,
+    bool isSelected,
+    VoidCallback onSelection,
+  )
   itemBuilder;
 
   @override
@@ -44,7 +43,6 @@ class _ScrollableRowState extends State<ScrollableRow> {
 
   @override
   Widget build(BuildContext context) {
-    print(selected.length);
     return SizedBox(
       height: widget.height,
       child: ListView.builder(
@@ -52,10 +50,10 @@ class _ScrollableRowState extends State<ScrollableRow> {
         itemCount: selected.length,
         itemBuilder: (context, index) {
           return widget.itemBuilder(
-            context: context,
-            index: index,
-            onSelection: () => setSelected(index),
-            selected: selected[index],
+            context,
+            index,
+            selected[index],
+            () => setSelected(index),
           );
         },
       ),
