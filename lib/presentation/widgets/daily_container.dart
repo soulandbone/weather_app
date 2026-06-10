@@ -8,20 +8,23 @@ class DailyContainer extends StatelessWidget {
     required this.isSelected,
     required this.onSelection,
     required this.isCelsius,
+    required this.width,
     super.key,
   });
   final DailyForecast forecast;
   final bool isSelected;
   final bool isCelsius;
   final VoidCallback onSelection;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onSelection,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 3),
-        padding: EdgeInsets.all(8),
+        width: width,
+        margin: EdgeInsets.symmetric(horizontal: 2),
+        padding: EdgeInsets.all(4),
         decoration: BoxDecoration(
           color: isSelected ? Colors.green : Colors.blue,
           borderRadius: BorderRadius.circular(20),
@@ -30,7 +33,17 @@ class DailyContainer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
 
           children: [
+            Image.network(forecast.stringUrl),
+            Text(
+              isCelsius ? "${forecast.avgTempC} °C" : "${forecast.avgTempF} °F",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
             Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   isCelsius
@@ -54,8 +67,6 @@ class DailyContainer extends StatelessWidget {
                 ),
               ],
             ),
-
-            Image.network(forecast.stringUrl),
           ],
         ),
       ),

@@ -14,9 +14,8 @@ class WeatherCubit extends Cubit<WeatherState> {
 
   Future<void> fetchLocationAndWeather() async {
     emit(WeatherLoading());
-    print("The time now is ${DateTime.now().toIso8601String()}");
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('lastRequest', DateTime.now().toIso8601String());
 
     try {
       final position = await geolocationService.getCurrentPosition();
@@ -42,38 +41,27 @@ class WeatherCubit extends Cubit<WeatherState> {
         var weatherResponse = await repository.getWeatherData(
           locality,
           country,
-        ); // problem here, is that if we just search by locality, the weather api just gives Quintero in Mexico for example
+        );
+
+        // problem here, is that if we just search by locality, the weather api just gives Quintero in Mexico for example
 
         emit(WeatherLoaded(weatherResponse: weatherResponse));
+
+        var forecastResponse = await repository.getThreeDaysForecast(
+          locality,
+          country,
+        );
+
+        emit(
+          WeatherLoaded(
+            weatherResponse: weatherResponse,
+            isForecastLoading: false,
+            forecastResponse: forecastResponse,
+          ),
+        );
       }
     } catch (e) {
       emit(WeatherError(e.toString()));
-    }
-  }
-
-  Future<void> fetchLocationAnd7DaysForecast() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    var timeNow = DateTime.now();
-    var lastConnectionString = prefs.getString('lastRequest');
-
-    if (lastConnectionString != null) {
-      var lastConnectionDate = DateTime.parse(lastConnectionString);
-      var difference = timeNow.difference(lastConnectionDate);
-
-      String city;
-      String country;
-
-      if (difference.inHours < 1) {
-        city = prefs.getString('lastLocationCity')!;
-        country = prefs.getString('lastLocationCountry')!;
-
-        var forecastResponse = await repository.getSevenDaysForecast(
-          city,
-          country,
-        );
-        emit(ForecastLoaded(forecastResponse: forecastResponse));
-      }
     }
   }
 }

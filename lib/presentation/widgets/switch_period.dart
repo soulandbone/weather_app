@@ -56,7 +56,7 @@ class _SwitchPeriodState extends State<SwitchPeriod> {
               ),
               padding: EdgeInsets.all(10),
               child: Text(
-                '7-day Forecast',
+                '3-day Forecast',
                 style: TextStyle(fontSize: selected[1] ? 18 : 12),
               ),
             ),

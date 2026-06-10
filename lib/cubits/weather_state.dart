@@ -11,17 +11,17 @@ class WeatherLoading extends WeatherState {
 }
 
 class WeatherLoaded extends WeatherState {
-  WeatherLoaded({required this.weatherResponse});
+  WeatherLoaded({
+    required this.weatherResponse,
+    this.isForecastLoading = true,
+    this.forecastResponse,
+  });
 
   final WeatherResponse weatherResponse;
+  final ThreeDaysForecast? forecastResponse;
+  final bool isForecastLoading;
 
   //State the moment we have loaded the data. It Returns the data
-}
-
-class ForecastLoaded extends WeatherState {
-  ForecastLoaded({required this.forecastResponse});
-
-  final SevenDaysForecast forecastResponse;
 }
 
 class WeatherError extends WeatherState {

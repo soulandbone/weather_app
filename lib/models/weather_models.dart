@@ -117,23 +117,23 @@ class WeatherResponse {
   }
 }
 
-class SevenDaysForecast {
-  SevenDaysForecast(this.forecastDays);
+class ThreeDaysForecast {
+  ThreeDaysForecast(this.forecastDays);
 
   final List<DailyForecast> forecastDays;
 
-  factory SevenDaysForecast.fromJson(Map<String, dynamic> jsonData) {
+  factory ThreeDaysForecast.fromJson(Map<String, dynamic> jsonData) {
     final listOfDays =
         jsonData['forecast']['forecastday'] as List; //list of days
 
-    final listOfSevenDays = listOfDays.skip(1).take(7);
+    final listOfThreeDays = listOfDays.take(3);
 
     final result =
-        listOfSevenDays
+        listOfThreeDays
             .map<DailyForecast>((e) => DailyForecast.fromJson(e))
             .toList();
 
-    return SevenDaysForecast(result);
+    return ThreeDaysForecast(result);
   }
 }
 
@@ -169,8 +169,8 @@ class DailyForecast {
 
     final stringUrl =
         json['day']['condition']['icon'].substring(0, 2) == '//'
-            ? 'https:${json['condition']['icon']}'
-            : json['condition']['icon'];
+            ? 'https:${json['day']['condition']['icon']}'
+            : json['day']['condition']['icon'];
 
     return DailyForecast(
       maxTempF: maxTempF,

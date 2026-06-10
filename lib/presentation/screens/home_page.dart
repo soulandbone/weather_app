@@ -9,6 +9,7 @@ import 'package:weather_app/enums/temperature_units.dart';
 import 'package:weather_app/models/weather_models.dart';
 import 'package:weather_app/presentation/screens/settings_page.dart';
 import 'package:weather_app/presentation/screens/theme_page.dart';
+import 'package:weather_app/presentation/widgets/daily_container.dart';
 import 'package:weather_app/presentation/widgets/hourly_container.dart';
 import 'package:weather_app/presentation/widgets/main_container.dart';
 import 'package:weather_app/presentation/widgets/scrollable_row.dart';
@@ -22,7 +23,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool oneDay = true;
+  bool isOneDay = true;
 
   @override
   void initState() {
@@ -93,12 +94,12 @@ class _HomePageState extends State<HomePage> {
                     SwitchPeriod(
                       onChanged: (value) {
                         setState(() {
-                          oneDay = value;
+                          isOneDay = value;
                         });
                       },
                     ),
                     const Gap(10),
-                    oneDay
+                    isOneDay
                         ? ScrollableRow<HourlyWeatherDetails>(
                           height: 125,
                           details:
@@ -125,13 +126,11 @@ class _HomePageState extends State<HomePage> {
                             );
                           },
                         )
-                        : ScrollableRow<HourlyWeatherDetails>(
+                        : state.isForecastLoading
+                        ? Center(child: CircularProgressIndicator())
+                        : ScrollableRow<DailyForecast>(
                           height: 125,
-                          details:
-                              state
-                                  .weatherResponse
-                                  .hourByHourDetails
-                                  .hourlyData,
+                          details: state.forecastResponse!.forecastDays,
 
                           itemBuilder: (
                             context,
@@ -139,15 +138,13 @@ class _HomePageState extends State<HomePage> {
                             isSelected,
                             onSelection,
                           ) {
-                            return HourlyContainer(
-                              hourlyWeatherDetails:
-                                  state
-                                      .weatherResponse
-                                      .hourByHourDetails
-                                      .hourlyData[index],
+                            return DailyContainer(
+                              width: 130,
+                              forecast:
+                                  state.forecastResponse!.forecastDays[index],
+                              isCelsius: isCelsius,
                               isSelected: isSelected,
                               onSelection: onSelection,
-                              isCelsius: true,
                             );
                           },
                         ),

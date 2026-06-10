@@ -39,12 +39,12 @@ class MainContainer extends StatelessWidget {
               style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
             ),
           ),
-          const Gap(20),
+          const Gap(10),
           Image.network(mainWeatherInfo.imageUrl, scale: 0.4),
 
-          const Gap(20),
+          const Gap(10),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 isCelsius
