@@ -2,9 +2,15 @@ import 'dart:async';
 
 import 'package:geolocator/geolocator.dart';
 
-class GeolocationService {
+abstract class GeoLocationService {
+  Future<bool> checkPermission();
+  Future<Position?> getCurrentPosition();
+}
+
+class GeoLocationServiceImpl implements GeoLocationService {
   final GeolocatorPlatform _geolocatorPlatform = GeolocatorPlatform.instance;
 
+  @override
   Future<bool> checkPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -33,6 +39,7 @@ class GeolocationService {
         permission == LocationPermission.whileInUse;
   }
 
+  @override
   Future<Position?> getCurrentPosition() async {
     final LocationSettings locationSettings = LocationSettings(
       timeLimit: Duration(seconds: 10),
@@ -44,7 +51,7 @@ class GeolocationService {
       return null;
     }
 
-    final lastKownn =
+    final lastKnown =
         await _geolocatorPlatform
             .getLastKnownPosition(); //function signature is Future<Position?>, means it can return null
 
@@ -56,7 +63,7 @@ class GeolocationService {
 
       return currentPosition; //returns in latitude, longitude format.
     } catch (_) {
-      return lastKownn;
+      return lastKnown;
     }
   }
 }

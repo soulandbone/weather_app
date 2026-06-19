@@ -29,8 +29,15 @@ class _SwitchPeriodState extends State<SwitchPeriod> {
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
+                border: Border.all(
+                  width: 1,
+                  color:
+                      selected[0]
+                          ? Theme.of(context).colorScheme.onPrimary
+                          : Theme.of(context).colorScheme.surface,
+                ),
                 borderRadius: BorderRadius.circular(10),
-                color: Colors.amber,
+                color: Theme.of(context).colorScheme.tertiary,
               ),
               padding: EdgeInsets.all(10),
               child: Text(
@@ -51,8 +58,15 @@ class _SwitchPeriodState extends State<SwitchPeriod> {
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
+                border: Border.all(
+                  width: 1,
+                  color:
+                      selected[1]
+                          ? Theme.of(context).colorScheme.onPrimary
+                          : Theme.of(context).colorScheme.surface,
+                ),
                 borderRadius: BorderRadius.circular(10),
-                color: Colors.red,
+                color: Theme.of(context).colorScheme.inversePrimary,
               ),
               padding: EdgeInsets.all(10),
               child: Text(

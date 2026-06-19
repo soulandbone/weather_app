@@ -10,7 +10,7 @@ class WeatherCubit extends Cubit<WeatherState> {
     : super(WeatherInitial());
 
   final WeatherRepository repository;
-  final GeolocationService geolocationService;
+  final GeoLocationService geolocationService;
 
   Future<void> fetchLocationAndWeather() async {
     emit(WeatherLoading());

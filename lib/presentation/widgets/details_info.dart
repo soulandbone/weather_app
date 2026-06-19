@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:weather_app/constants/app_strings.dart';
 import 'package:weather_app/cubits/app_settings_cubit.dart';
 import 'package:weather_app/cubits/app_settings_state.dart';
 import 'package:weather_app/enums/wind_units.dart';
@@ -57,29 +58,32 @@ class DetailsInfo extends StatelessWidget {
         children: [
           DetailsCard(
             icon: HugeIcon(
+              color: Colors.white,
               icon: HugeIcons.strokeRoundedFastWind,
               strokeWidth: 2.5,
             ),
             title: "$windValue $windText",
-            subtitle: 'Wind',
+            subtitle: AppStrings.kWindLabel,
           ),
           Gap(5),
           DetailsCard(
             icon: HugeIcon(
+              color: Colors.white,
               icon: HugeIcons.strokeRoundedDroplet,
               strokeWidth: 2.5,
             ),
             title: '$humidity%',
-            subtitle: 'Humidity',
+            subtitle: AppStrings.kHumidityLabel,
           ),
           Gap(5),
           DetailsCard(
             icon: HugeIcon(
+              color: Colors.white,
               icon: HugeIcons.strokeRoundedCloudLittleRain,
               strokeWidth: 2.5,
             ),
             title: rainChance,
-            subtitle: 'Rain %',
+            subtitle: AppStrings.kRainPercentageLabel,
           ),
         ],
       ),

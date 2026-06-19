@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:weather_app/models/weather_models.dart';
 
@@ -33,13 +34,15 @@ class DailyContainer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
 
           children: [
-            Image.network(forecast.stringUrl),
+            Image.network(forecast.stringUrl, scale: 1.4),
             Text(
               isCelsius ? "${forecast.avgTempC} °C" : "${forecast.avgTempF} °F",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+              style: GoogleFonts.orbitron(
+                textStyle: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
               ),
             ),
             Row(

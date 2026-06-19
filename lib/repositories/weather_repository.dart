@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:weather_app/core/exceptions.dart';
 import 'package:weather_app/models/weather_models.dart';
 import 'package:weather_app/services/api_service.dart';
 
@@ -15,11 +18,30 @@ class WeatherRepositoryImpl implements WeatherRepository {
 
   ThreeDaysForecast? get cachedThreeDays => _cachedThreeDays;
 
+  Future<T> _fetchAndParse<T>(
+    String city,
+    String country,
+    int days,
+    T Function(Map<String, dynamic>) fromJson,
+  ) async {
+    try {
+      var weatherInfo = await apiService.fetchData(
+        city: city,
+        country: country,
+        days: days,
+      );
+
+      var decodedJson = jsonDecode(weatherInfo.body) as Map<String, dynamic>;
+
+      return fromJson(decodedJson);
+    } on FormatException catch (e) {
+      throw ParseException('Invalid format : {$e.message}');
+    }
+  }
+
   @override
   Future<WeatherResponse> getWeatherData(String city, String country) async {
-    var weatherInfo = await apiService.fetchData(city, country);
-
-    return WeatherResponse.fromJson(weatherInfo);
+    return _fetchAndParse(city, country, 1, WeatherResponse.fromJson);
   }
 
   @override
@@ -27,12 +49,6 @@ class WeatherRepositoryImpl implements WeatherRepository {
     String city,
     String country,
   ) async {
-    var weatherInfo = await apiService.fetchData(city, country, days: 3);
-
-    final forecast = ThreeDaysForecast.fromJson(weatherInfo);
-
-    _cachedThreeDays = forecast;
-
-    return forecast;
+    return _fetchAndParse(city, country, 3, ThreeDaysForecast.fromJson);
   }
 }

@@ -35,4 +35,19 @@ class DateFormatter {
     final time24 = DateFormat.Hm().format(parsedData);
     return time24;
   }
+
+  String calculateTomorrow(String day) {
+    var result = switch (day) {
+      'Monday' => "Tuesday",
+      "Tuesday" => "Wednesday",
+      "Wednesday" => "Thursday",
+      "Thursday" => "Friday",
+      "Friday" => "Saturday",
+      "Saturday" => "Sunday",
+      "Sunday" => "Monday",
+      _ => "Error",
+    };
+
+    return result;
+  }
 }

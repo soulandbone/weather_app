@@ -13,6 +13,7 @@ class AppStrings {
   static const String kNauticalMilesPerHour = "Nautical miles per hour - kts";
 
   /*------------------Precipitation---------------- */
+  static const String kRainPercentageLabel = 'Rain %';
   static const String kPrecipitationlabel = 'Precipitation';
   static const String kMillimeters = 'Millimeters - mm';
   static const String kInches = 'Inches - in';
@@ -27,6 +28,10 @@ class AppStrings {
   static const String kVisibilityLabel = 'Visibility';
   static const String kKilometers = 'Kilometers - km';
   static const String kMiles = 'Miles - mi';
+
+  /*-------------  Humidity----------------------*/
+
+  static const String kHumidityLabel = 'Humidity';
 
   /*----------- Permissions------------------- */
 

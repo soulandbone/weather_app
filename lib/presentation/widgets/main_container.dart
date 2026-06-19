@@ -34,9 +34,23 @@ class MainContainer extends StatelessWidget {
         children: [
           const Gap(20),
           Center(
-            child: Text(
-              "${mainWeatherInfo.locationCity},${mainWeatherInfo.locationCountry}  ",
-              style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "${mainWeatherInfo.locationCity}, ",
+                  style: GoogleFonts.montserrat(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+
+                Text(
+                  "${mainWeatherInfo.locationCountry}  ",
+                  style: GoogleFonts.roboto(fontSize: 32, color: Colors.white),
+                ),
+              ],
             ),
           ),
           const Gap(10),
@@ -71,8 +85,14 @@ class MainContainer extends StatelessWidget {
             ],
           ),
 
-          Text(mainWeatherInfo.condition, style: const TextStyle(fontSize: 24)),
-          Text((dateFormatter.formatDate(DateTime.now()))),
+          Text(
+            mainWeatherInfo.condition,
+            style: const TextStyle(fontSize: 24, color: Colors.white),
+          ),
+          Text(
+            (dateFormatter.formatDate(DateTime.now())),
+            style: TextStyle(color: Colors.white),
+          ),
           const Gap(40),
           const Divider(color: Colors.white54, thickness: 1),
           Center(
