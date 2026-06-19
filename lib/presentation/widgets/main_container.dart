@@ -34,24 +34,18 @@ class MainContainer extends StatelessWidget {
         children: [
           const Gap(20),
           Center(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "${mainWeatherInfo.locationCity}, ",
-                  style: GoogleFonts.montserrat(
-                    fontSize: 36,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-
-                Text(
-                  "${mainWeatherInfo.locationCountry}  ",
-                  style: GoogleFonts.roboto(fontSize: 32, color: Colors.white),
-                ),
-              ],
+            child: Text(
+              "${mainWeatherInfo.locationCity}, ",
+              style: GoogleFonts.montserrat(
+                fontSize: 36,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
+          ),
+          Text(
+            "${mainWeatherInfo.locationCountry}  ",
+            style: GoogleFonts.roboto(fontSize: 22, color: Colors.white),
           ),
           const Gap(10),
           Image.network(mainWeatherInfo.imageUrl, scale: 0.4),

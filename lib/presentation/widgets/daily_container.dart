@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import 'package:weather_app/models/weather_models.dart';
 
@@ -17,6 +19,8 @@ class DailyContainer extends StatelessWidget {
   final bool isCelsius;
   final VoidCallback onSelection;
   final double width;
+
+  final iconSize = 12.0;
 
   @override
   Widget build(BuildContext context) {
@@ -47,16 +51,11 @@ class DailyContainer extends StatelessWidget {
             ),
             Row(
               mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  isCelsius
-                      ? "${forecast.maxTempC} °C"
-                      : "${forecast.maxTempF} °F",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 10,
-                  ),
+                HugeIcon(
+                  icon: HugeIcons.strokeRoundedArrowDown02,
+                  size: iconSize,
                 ),
                 Text(
                   isCelsius
@@ -65,7 +64,22 @@ class DailyContainer extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 8,
+                    fontSize: 10,
+                  ),
+                ),
+                Gap(10),
+                HugeIcon(
+                  icon: HugeIcons.strokeRoundedArrowUp02,
+                  size: iconSize,
+                ),
+                Text(
+                  isCelsius
+                      ? "${forecast.maxTempC} °C"
+                      : "${forecast.maxTempF} °F",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10,
                   ),
                 ),
               ],
