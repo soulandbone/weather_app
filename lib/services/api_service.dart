@@ -5,7 +5,7 @@ abstract class ApiService {
   ApiService(this.httpClient);
 
   final HttpClient httpClient;
-  Future<HttpResponse> fetchData({
+  Future<HttpResponse<String>> fetchData({
     required String city,
     required String country,
     required int days,
