@@ -49,4 +49,9 @@ class AppStrings {
   static const String kAppName = 'Weather App';
   static const String kTheme = "Theme";
   static const String kUnits = "Units";
+
+  /*----------- Error texts ------------------- */
+
+  static const String kErrorSomethingWentWrong =
+      'Something went wrong while loading the weather. Please try again.';
 }

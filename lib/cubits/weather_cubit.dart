@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:weather_app/constants/app_strings.dart';
 import 'package:weather_app/cubits/weather_state.dart';
 import 'package:weather_app/repositories/weather_repository.dart';
 import 'package:weather_app/services/geo_location_service.dart';
@@ -62,7 +63,7 @@ class WeatherCubit extends Cubit<WeatherState> {
         );
       }
     } catch (e) {
-      emit(WeatherError(e.toString()));
+      emit(WeatherError(AppStrings.kErrorSomethingWentWrong));
     }
   }
 }
