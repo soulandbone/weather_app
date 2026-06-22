@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
-class SwitchPeriod extends StatefulWidget {
-  const SwitchPeriod({super.key, required this.onChanged});
+class SwitchPeriod extends StatelessWidget {
+  const SwitchPeriod({
+    super.key,
+    required this.isOneDay,
+    required this.onChanged,
+  });
 
   final ValueChanged<bool> onChanged;
-  @override
-  State<SwitchPeriod> createState() => _SwitchPeriodState();
-}
-
-class _SwitchPeriodState extends State<SwitchPeriod> {
-  List<bool> selected = [true, false];
+  final bool isOneDay;
 
   @override
   Widget build(BuildContext context) {
@@ -20,58 +19,50 @@ class _SwitchPeriodState extends State<SwitchPeriod> {
         children: [
           InkWell(
             onTap: () {
-              widget.onChanged(true);
-              setState(() {
-                selected[0] = true;
-                selected[1] = false;
-              });
+              onChanged(true);
             },
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 1,
                   color:
-                      selected[0]
+                      isOneDay
                           ? Theme.of(context).colorScheme.onPrimary
                           : Theme.of(context).colorScheme.surface,
                 ),
                 borderRadius: BorderRadius.circular(10),
                 color: Theme.of(context).colorScheme.tertiary,
               ),
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Text(
                 'Today\'s Forecast',
-                style: TextStyle(fontSize: selected[0] ? 18 : 12),
+                style: TextStyle(fontSize: isOneDay ? 18 : 12),
               ),
             ),
           ),
 
           InkWell(
             onTap: () {
-              widget.onChanged(false);
-              setState(() {
-                selected[0] = false;
-                selected[1] = true;
-              });
+              onChanged(false);
             },
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 1,
                   color:
-                      selected[1]
+                      !isOneDay
                           ? Theme.of(context).colorScheme.onPrimary
                           : Theme.of(context).colorScheme.surface,
                 ),
                 borderRadius: BorderRadius.circular(10),
                 color: Theme.of(context).colorScheme.inversePrimary,
               ),
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Text(
                 '3-day Forecast',
-                style: TextStyle(fontSize: selected[1] ? 18 : 12),
+                style: TextStyle(fontSize: !isOneDay ? 18 : 12),
               ),
             ),
           ),

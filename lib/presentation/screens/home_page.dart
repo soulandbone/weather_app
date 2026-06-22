@@ -108,6 +108,8 @@ class _HomePageState extends State<HomePage> {
                     const Gap(10),
 
                     SwitchPeriod(
+                      isOneDay: isOneDay,
+
                       onChanged: (value) {
                         setState(() {
                           isOneDay = value;
@@ -166,14 +168,19 @@ Widget _hourlyWeatherDetails(WeatherLoaded state, bool isCelsius) {
 }
 
 Widget _dailyWeatherDetails(WeatherLoaded state, bool isCelsius) {
+  if (state.forecastResponse == null) {
+    return Center(child: Text('No forecast available'));
+  }
+  final response = state.forecastResponse!;
+
   return ScrollableRow<DailyForecast>(
     height: 125,
-    details: state.forecastResponse!.forecastDays,
+    details: response.forecastDays,
 
     itemBuilder: (context, index, isSelected, onSelection) {
       return DailyContainer(
         width: 130,
-        forecast: state.forecastResponse!.forecastDays[index],
+        forecast: response.forecastDays[index],
         isCelsius: isCelsius,
         isSelected: isSelected,
         onSelection: onSelection,

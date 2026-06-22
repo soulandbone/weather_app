@@ -21,6 +21,18 @@ class WeatherLoaded extends WeatherState {
   final ThreeDaysForecast? forecastResponse;
   final bool isForecastLoading;
 
+  WeatherLoaded copyWith({
+    WeatherResponse? weatherResponse,
+    ThreeDaysForecast? forecastResponse,
+    bool? isForecastLoading,
+  }) {
+    return WeatherLoaded(
+      weatherResponse: weatherResponse ?? this.weatherResponse,
+      forecastResponse: forecastResponse ?? this.forecastResponse,
+      isForecastLoading: isForecastLoading ?? this.isForecastLoading,
+    );
+  }
+
   //State the moment we have loaded the data. It Returns the data
 }
 

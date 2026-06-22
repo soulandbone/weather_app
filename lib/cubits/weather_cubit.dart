@@ -45,7 +45,9 @@ class WeatherCubit extends Cubit<WeatherState> {
 
         // problem here, is that if we just search by locality, the weather api just gives Quintero in Mexico for example
 
-        emit(WeatherLoaded(weatherResponse: weatherResponse));
+        emit(
+          WeatherLoaded(weatherResponse: weatherResponse),
+        ); //Weatherloaded defaults isForecastLoading to true
 
         var forecastResponse = await repository.getThreeDaysForecast(
           locality,
@@ -53,10 +55,9 @@ class WeatherCubit extends Cubit<WeatherState> {
         );
 
         emit(
-          WeatherLoaded(
-            weatherResponse: weatherResponse,
-            isForecastLoading: false,
+          (state as WeatherLoaded).copyWith(
             forecastResponse: forecastResponse,
+            isForecastLoading: false,
           ),
         );
       }
