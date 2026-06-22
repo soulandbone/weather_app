@@ -43,4 +43,10 @@ class AppStrings {
 
   static const String kLocationPermissionDeniedForever =
       'Location permissions are permanently denied, we cannot request permissions ';
+
+  /*----------- General texts ------------------- */
+
+  static const String kAppName = 'Weather App';
+  static const String kTheme = "Theme";
+  static const String kUnits = "Units";
 }

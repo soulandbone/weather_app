@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:weather_app/constants/app_strings.dart';
 import 'package:weather_app/cubits/app_settings_cubit.dart';
 import 'package:weather_app/cubits/app_settings_state.dart';
 import 'package:weather_app/cubits/weather_cubit.dart';
@@ -14,6 +15,8 @@ import 'package:weather_app/presentation/widgets/hourly_container.dart';
 import 'package:weather_app/presentation/widgets/main_container.dart';
 import 'package:weather_app/presentation/widgets/scrollable_row.dart';
 import 'package:weather_app/presentation/widgets/switch_period.dart';
+
+enum HomeMenuItem { theme, units }
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -44,34 +47,41 @@ class _HomePageState extends State<HomePage> {
     });
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Weather App'),
+        title: const Text(AppStrings.kAppName),
         actions: [
-          PopupMenuButton(
-            onOpened: () {},
+          PopupMenuButton<HomeMenuItem>(
             color: Colors.blue,
-            onSelected: (value) {
+            onSelected: (HomeMenuItem value) {
               switch (value) {
-                case 'Theme':
-                  Navigator.of(
-                    context,
-                  ).push(MaterialPageRoute(builder: (context) => ThemePage()));
-                  break;
-                case 'Units':
+                case HomeMenuItem.theme:
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => SettingsPage()),
+                    MaterialPageRoute(builder: (context) => const ThemePage()),
+                  );
+                  break;
+                case HomeMenuItem.units:
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const SettingsPage(),
+                    ),
                   );
               }
             },
             itemBuilder:
                 (BuildContext context) => [
                   PopupMenuItem(
-                    value: 'Theme',
+                    value: HomeMenuItem.theme,
 
-                    child: Text('Theme', style: TextStyle(color: Colors.white)),
+                    child: Text(
+                      AppStrings.kTheme,
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                   PopupMenuItem(
-                    value: 'Units',
-                    child: Text('Units', style: TextStyle(color: Colors.white)),
+                    value: HomeMenuItem.units,
+                    child: Text(
+                      AppStrings.kUnits,
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ],
           ),
@@ -83,7 +93,6 @@ class _HomePageState extends State<HomePage> {
             return const Center(child: CircularProgressIndicator());
           } else if (state is WeatherLoaded) {
             return RefreshIndicator(
-              key: ValueKey("refresh"),
               onRefresh: () {
                 return context.read<WeatherCubit>().fetchLocationAndWeather();
               },
@@ -107,54 +116,10 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const Gap(10),
                     isOneDay
-                        ? ScrollableRow<HourlyWeatherDetails>(
-                          height: 125,
-                          details:
-                              state
-                                  .weatherResponse
-                                  .hourByHourDetails
-                                  .hourlyData,
-
-                          itemBuilder: (
-                            context,
-                            index,
-                            isSelected,
-                            onSelection,
-                          ) {
-                            return HourlyContainer(
-                              hourlyWeatherDetails:
-                                  state
-                                      .weatherResponse
-                                      .hourByHourDetails
-                                      .hourlyData[index],
-                              isSelected: isSelected,
-                              onSelection: onSelection,
-                              isCelsius: isCelsius,
-                            );
-                          },
-                        )
+                        ? _hourlyWeatherDetails(state, isCelsius)
                         : state.isForecastLoading
                         ? Center(child: CircularProgressIndicator())
-                        : ScrollableRow<DailyForecast>(
-                          height: 125,
-                          details: state.forecastResponse!.forecastDays,
-
-                          itemBuilder: (
-                            context,
-                            index,
-                            isSelected,
-                            onSelection,
-                          ) {
-                            return DailyContainer(
-                              width: 130,
-                              forecast:
-                                  state.forecastResponse!.forecastDays[index],
-                              isCelsius: isCelsius,
-                              isSelected: isSelected,
-                              onSelection: onSelection,
-                            );
-                          },
-                        ),
+                        : _dailyWeatherDetails(state, isCelsius),
                   ],
                 ),
               ),
@@ -181,4 +146,38 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+Widget _hourlyWeatherDetails(WeatherLoaded state, bool isCelsius) {
+  return ScrollableRow<HourlyWeatherDetails>(
+    height: 125,
+    details: state.weatherResponse.hourByHourDetails.hourlyData,
+
+    itemBuilder: (context, index, isSelected, onSelection) {
+      return HourlyContainer(
+        hourlyWeatherDetails:
+            state.weatherResponse.hourByHourDetails.hourlyData[index],
+        isSelected: isSelected,
+        onSelection: onSelection,
+        isCelsius: isCelsius,
+      );
+    },
+  );
+}
+
+Widget _dailyWeatherDetails(WeatherLoaded state, bool isCelsius) {
+  return ScrollableRow<DailyForecast>(
+    height: 125,
+    details: state.forecastResponse!.forecastDays,
+
+    itemBuilder: (context, index, isSelected, onSelection) {
+      return DailyContainer(
+        width: 130,
+        forecast: state.forecastResponse!.forecastDays[index],
+        isCelsius: isCelsius,
+        isSelected: isSelected,
+        onSelection: onSelection,
+      );
+    },
+  );
 }
