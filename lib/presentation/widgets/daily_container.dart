@@ -20,7 +20,7 @@ class DailyContainer extends StatelessWidget {
   final VoidCallback onSelection;
   final double width;
 
-  final iconSize = 12.0;
+  final iconSize = 15.0;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +56,7 @@ class DailyContainer extends StatelessWidget {
                 HugeIcon(
                   icon: HugeIcons.strokeRoundedArrowDown02,
                   size: iconSize,
+                  color: Colors.white,
                 ),
                 Text(
                   isCelsius
@@ -71,6 +72,7 @@ class DailyContainer extends StatelessWidget {
                 HugeIcon(
                   icon: HugeIcons.strokeRoundedArrowUp02,
                   size: iconSize,
+                  color: Colors.white,
                 ),
                 Text(
                   isCelsius

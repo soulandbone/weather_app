@@ -64,8 +64,15 @@ class _HomePageState extends State<HomePage> {
             },
             itemBuilder:
                 (BuildContext context) => [
-                  PopupMenuItem(value: 'Theme', child: Text('Theme & Images')),
-                  PopupMenuItem(value: 'Units', child: Text('Units')),
+                  PopupMenuItem(
+                    value: 'Theme',
+
+                    child: Text('Theme', style: TextStyle(color: Colors.white)),
+                  ),
+                  PopupMenuItem(
+                    value: 'Units',
+                    child: Text('Units', style: TextStyle(color: Colors.white)),
+                  ),
                 ],
           ),
         ],
