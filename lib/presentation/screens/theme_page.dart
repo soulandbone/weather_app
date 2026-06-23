@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/constants/app_strings.dart';
 import 'package:weather_app/cubits/app_theme_cubit.dart';
 import 'package:weather_app/cubits/app_theme_state.dart';
 
@@ -15,7 +16,7 @@ class ThemePage extends StatelessWidget {
             SnackBar(
               content: Text(state.message),
               action: SnackBarAction(
-                label: 'Retry',
+                label: AppStrings.kRetry,
                 onPressed: () {
                   context.read<AppThemeCubit>().toggleTheme();
                 },
@@ -34,7 +35,7 @@ class ThemePage extends StatelessWidget {
                 child: Column(
                   children: [
                     SwitchListTile(
-                      title: const Text('Dark Theme '),
+                      title: const Text(AppStrings.kDarkTheme),
 
                       value: state.isDark,
                       onChanged: (_) {

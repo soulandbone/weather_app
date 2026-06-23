@@ -49,6 +49,8 @@ class AppStrings {
   static const String kAppName = 'Weather App';
   static const String kTheme = "Theme";
   static const String kUnits = "Units";
+  static const String kRetry = "Retry";
+  static const String kDarkTheme = "Dark Theme";
 
   /*----------- Error texts ------------------- */
 
