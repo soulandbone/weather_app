@@ -128,18 +128,21 @@ class _HomePageState extends State<HomePage> {
             );
           } else if (state is WeatherError) {
             return Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(state.message),
-                  const SizedBox(height: 8),
-                  ElevatedButton(
-                    onPressed: () {
-                      context.read<WeatherCubit>().fetchLocationAndWeather();
-                    },
-                    child: const Text('Retry'),
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsetsGeometry.symmetric(horizontal: 24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(state.message, textAlign: TextAlign.center),
+                    const SizedBox(height: 8),
+                    ElevatedButton(
+                      onPressed: () {
+                        context.read<WeatherCubit>().fetchLocationAndWeather();
+                      },
+                      child: const Text('Retry'),
+                    ),
+                  ],
+                ),
               ),
             );
           }

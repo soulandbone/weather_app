@@ -56,4 +56,6 @@ class AppStrings {
 
   static const String kErrorSomethingWentWrong =
       'Something went wrong while loading the weather. Please try again.';
+  static const String kErrorLocationUnavailable =
+      'Location cannot be retrieved at this moment';
 }

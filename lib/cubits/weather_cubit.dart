@@ -61,6 +61,8 @@ class WeatherCubit extends Cubit<WeatherState> {
             isForecastLoading: false,
           ),
         );
+      } else {
+        emit(WeatherError(AppStrings.kErrorLocationUnavailable));
       }
     } catch (e) {
       emit(WeatherError(AppStrings.kErrorSomethingWentWrong));
