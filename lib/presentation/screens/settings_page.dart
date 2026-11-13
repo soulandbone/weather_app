@@ -14,7 +14,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: const Text('Units')),
       body: BlocBuilder<AppSettingsCubit, SettingsState>(
         builder: (context, state) {
           return Column(

@@ -43,6 +43,10 @@ class MyApp extends StatelessWidget {
       theme = AppTheme.light;
     }
 
-    return MaterialApp(theme: theme, home: HomePage());
+    return MaterialApp(
+      theme: theme,
+      home: HomePage(),
+      debugShowCheckedModeBanner: false,
+    );
   }
 }
