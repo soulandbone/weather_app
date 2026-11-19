@@ -17,15 +17,15 @@ class SettingsPage extends StatelessWidget {
       appBar: AppBar(title: const Text('Units')),
       body: BlocBuilder<AppSettingsCubit, SettingsState>(
         builder: (context, state) {
+          if (state is! SettingsLoaded) {
+            return const Center(child: CircularProgressIndicator());
+          }
           return Column(
             children: [
               SettingsMenuTile(
                 unitSetting: UnitsSettings(
                   title: AppStrings.kTemperatureLabel,
-                  currentSelection:
-                      (context.watch<AppSettingsCubit>().state
-                              as SettingsLoaded)
-                          .temperature,
+                  currentSelection: state.temperature,
                   onSelected: (temperature) {
                     context.read<AppSettingsCubit>().setTempUnits(temperature);
                   },
@@ -40,10 +40,7 @@ class SettingsPage extends StatelessWidget {
                   onSelected: (pressure) {
                     context.read<AppSettingsCubit>().setPressureUnits(pressure);
                   },
-                  currentSelection:
-                      (context.watch<AppSettingsCubit>().state
-                              as SettingsLoaded)
-                          .pressure,
+                  currentSelection: state.pressure,
                   unitsMap: AppMaps.kPressureMappings,
                 ),
               ),
@@ -54,10 +51,7 @@ class SettingsPage extends StatelessWidget {
                   onSelected: (wind) {
                     context.read<AppSettingsCubit>().setWindUnits(wind);
                   },
-                  currentSelection:
-                      (context.watch<AppSettingsCubit>().state
-                              as SettingsLoaded)
-                          .wind,
+                  currentSelection: state.wind,
                   unitsMap: AppMaps.kWindMappings,
                 ),
               ),
@@ -70,10 +64,7 @@ class SettingsPage extends StatelessWidget {
                       precipitation,
                     );
                   },
-                  currentSelection:
-                      (context.watch<AppSettingsCubit>().state
-                              as SettingsLoaded)
-                          .precipitation,
+                  currentSelection: state.precipitation,
                   unitsMap: AppMaps.kPrecipitationMappings,
                 ),
               ),
@@ -86,10 +77,7 @@ class SettingsPage extends StatelessWidget {
                       visibility,
                     );
                   },
-                  currentSelection:
-                      (context.watch<AppSettingsCubit>().state
-                              as SettingsLoaded)
-                          .visibility,
+                  currentSelection: state.visibility,
                   unitsMap: AppMaps.kVisibilityMappings,
                 ),
               ),

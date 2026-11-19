@@ -37,45 +37,59 @@ class AppSettingsCubit extends Cubit<SettingsState> {
   }
 
   Future<void> setTempUnits(TemperatureUnits temperature) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isCelsius', TemperatureUnits.celsius == temperature);
-
     final current = state;
 
     if (current is! SettingsLoaded) return;
 
-    emit((state as SettingsLoaded).copyWith(temperature: temperature));
+    emit(current.copyWith(temperature: temperature));
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isCelsius', TemperatureUnits.celsius == temperature);
   }
 
   Future<void> setPrecipitationUnits(PrecipitationUnits precipitation) async {
+    final current = state;
+    if (current is! SettingsLoaded) return;
+
+    emit(current.copyWith(precipitation: precipitation));
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool(
       'isMillimeters',
       PrecipitationUnits.millimeters == precipitation,
     );
-    emit((state as SettingsLoaded).copyWith(precipitation: precipitation));
   }
 
   Future<void> setVisibilityUnits(VisibilityUnits visibility) async {
+    final current = state;
+    if (current is! SettingsLoaded) return;
+
+    emit(current.copyWith(visibility: visibility));
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool(
       'isKilometers',
       VisibilityUnits.kilometers == visibility,
     );
-    emit((state as SettingsLoaded).copyWith(visibility: visibility));
   }
 
   Future<void> setPressureUnits(PressureUnits pressure) async {
+    final current = state;
+    if (current is! SettingsLoaded) return;
+
+    emit(current.copyWith(pressure: pressure));
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-
     await prefs.setInt('pressureUnits', pressure.selection);
-
-    emit((state as SettingsLoaded).copyWith(pressure: pressure));
   }
 
   Future<void> setWindUnits(WindUnits wind) async {
+    final current = state;
+    if (current is! SettingsLoaded) return;
+
+    emit(current.copyWith(wind: wind));
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt('windUnits', wind.selection);
-    emit((state as SettingsLoaded).copyWith(wind: wind));
   }
 }
