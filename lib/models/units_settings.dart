@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class UnitsSettings<T> {
   // This class was created to pass data to SettingsMenuTile, and then to AppModal, both Widgets need the information contained here.
   UnitsSettings({
@@ -10,7 +12,7 @@ class UnitsSettings<T> {
 
   final String title;
   final List<T> unitOptions;
-  final Function(T) onSelected;
+  final ValueChanged<T> onSelected;
   final T currentSelection;
   final Map<T, String> unitsMap;
 }

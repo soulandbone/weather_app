@@ -14,7 +14,7 @@ class AppStrings {
 
   /*------------------Precipitation---------------- */
   static const String kRainPercentageLabel = 'Rain %';
-  static const String kPrecipitationlabel = 'Precipitation';
+  static const String kPrecipitationLabel = 'Precipitation';
   static const String kMillimeters = 'Millimeters - mm';
   static const String kInches = 'Inches - in';
 
